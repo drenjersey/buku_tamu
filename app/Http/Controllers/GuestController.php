@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Guest;
 
 class GuestController extends Controller
 {
@@ -62,4 +63,61 @@ class GuestController extends Controller
 
         return view('guests.rekap', compact('guests', 'startDate', 'endDate'));
     }
+
+    public function exportCsv(Request $request)
+{
+    // 1. Ambil Filter Tanggal (Sama persis dengan logika rekap)
+    $query = Guest::query();
+
+    if ($request->filled('start_date') && $request->filled('end_date')) {
+        $query->whereBetween('tanggal_kunjungan', [
+            $request->start_date, 
+            $request->end_date
+        ]);
+    }
+
+    // 2. Ambil semua data (JANGAN dipaginate, karena kita mau download semua)
+    $guests = $query->orderBy('tanggal_kunjungan', 'desc')->get();
+
+    // 3. Buat Nama File Unik
+    $filename = 'rekap-kunjungan-' . date('Y-m-d-His') . '.csv';
+
+    // 4. Stream Download (Teknik hemat memori)
+    $headers = [
+        "Content-Type" => "text/csv",
+        "Content-Disposition" => "attachment; filename=\"$filename\"",
+    ];
+
+    return response()->stream(function () use ($guests) {
+        $file = fopen('php://output', 'w');
+
+        // Header Kolom CSV (Baris Pertama)
+        fputcsv($file, [
+            'No', 
+            'Tanggal Kunjungan', 
+            'Nama Tamu', 
+            'Asal Instansi', 
+            'Jumlah Personil', 
+            'Keperluan', 
+            'Bertemu Dengan'
+        ]);
+
+        // Isi Data (Looping)
+        $no = 1;
+        foreach ($guests as $guest) {
+            fputcsv($file, [
+                $no++,
+                $guest->tanggal_kunjungan,
+                $guest->nama_tamu,
+                $guest->asal_instansi,
+                $guest->jumlah_personil,
+                $guest->keperluan,
+                $guest->penerima_kunjungan
+            ]);
+        }
+
+        fclose($file);
+    }, 200, $headers);
+}
+
 }

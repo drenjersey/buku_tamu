@@ -16,3 +16,6 @@ Route::get('/statistik', [StatistikController::class, 'index'])->name('stats.ind
 
 // Route Rekap
 Route::get('/rekap', [GuestController::class, 'rekap'])->name('guest.rekap');
+
+// Route untuk Export CSV
+Route::get('/rekap/export', [GuestController::class, 'exportCsv'])->name('guest.export');

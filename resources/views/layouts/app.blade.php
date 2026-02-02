@@ -33,52 +33,66 @@
 </head>
 
 <body class="bg-soft text-slate-800">
-    <!-- Header -->
     <header class="bg-white py-4 px-6 md:px-12 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+        
         <div class="flex items-center gap-4">
-            <img src="/assets/img/logo_mataram.jpeg" alt="Logo Mataram" class="h-12 w-auto">
-            <div>
-                <h1 class="font-bold text-lg leading-tight text-blue-900">Pemerintah<br>Kota Mataram</h1>
-            </div>
+            <img src="{{ asset('assets/img/logo_kominfo.png') }}" alt="Logo Kominfo" class="h-12 w-auto object-contain">
+            
+            <div class="h-8 w-px bg-slate-200"></div>
 
+            <img src="{{ asset('assets/img/logo_mataram.jpeg') }}" alt="Logo Mataram" class="h-12 w-auto object-contain">
+            
+            <div>
+                <h1 class="font-bold text-lg leading-tight -ml-1 text-blue-900">Pemerintah Kota Mataram</h1>
+            </div>
         </div>
 
         <nav class="hidden lg:flex items-center gap-8 font-medium text-slate-600">
 
             {{-- 1. MENU HOME --}}
+            {{-- Aktif jika route bernama 'home' --}}
             <a href="{{ route('home') }}"
                 class="{{ request()->routeIs('home')
-    ? 'text-blue-700 font-bold border-b-2 border-blue-700'
-    : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
+                    ? 'text-blue-700 font-bold border-b-2 border-blue-700' 
+                    : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
                 Home
             </a>
 
             {{-- 2. MENU ISI FORM --}}
-            {{-- Menggunakan 'guest.*' agar tetap aktif saat di halaman create atau store --}}
+            {{-- Aktif jika route 'guest.create' ATAU 'guest.store' (biar pas simpan tetap nyala) --}}
             <a href="{{ route('guest.create') }}"
-                class="text-sm font-bold {{ request()->routeIs('guest.*')
-    ? 'text-blue-700 border-b-2 border-blue-700'
-    : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
+                class="text-sm font-bold {{ request()->routeIs('guest.create') || request()->routeIs('guest.store')
+                    ? 'text-blue-700 border-b-2 border-blue-700' 
+                    : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
                 Isi Form
             </a>
 
             {{-- 3. MENU REKAP --}}
+            {{-- Aktif jika route 'guest.rekap' ATAU 'guest.export' (biar pas download CSV tetap nyala) --}}
             <a href="{{ route('guest.rekap') }}"
-                class="text-sm font-bold {{ request()->routeIs('guest.rekap')
-    ? 'text-blue-700 border-b-2 border-blue-700'
-    : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
+                class="text-sm font-bold {{ request()->routeIs('guest.rekap') || request()->routeIs('guest.export')
+                    ? 'text-blue-700 border-b-2 border-blue-700' 
+                    : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
                 Rekap
             </a>
+            
         </nav>
+
+        <div class="lg:hidden">
+             <button class="p-2 text-slate-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
     </header>
 
     <main>
         @yield('content')
     </main>
 
-    <!-- Footer Simple -->
     <footer class="bg-white py-8 border-t border-slate-100 text-center text-slate-500 text-sm">
-        <p>&copy; 2024 Pemerintah Kota Mataram. All Rights Reserved.</p>
+        <p>&copy; 2026 Pemerintah Kota Mataram. All Rights Reserved.</p>
     </footer>
 </body>
 

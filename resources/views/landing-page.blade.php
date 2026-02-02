@@ -65,42 +65,19 @@
                         .animate-vertical-slide {
                             animation: vertical-slide 8s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
                         }
-                    </style>
-                    <p class="text-slate-500 font-medium">kami menjawab informasi seputar kota</p>
-                </div>
-
-                <!-- Search Bar -->
-                <div class="relative max-w-xl group">
-                    <div
-                        class="flex items-center bg-white rounded-full shadow-lg p-1 border border-slate-100 overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 transition-all">
-                        <input type="text" placeholder="Search..."
-                            class="w-full py-4 px-6 outline-none text-slate-600 font-medium">
-                        <button class="bg-blue-900 text-white p-4 rounded-full hover:bg-blue-800 transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </button>
-                    </div>
+                    </style>    
                 </div>
             </div>
 
             <!-- Right Content: Photos -->
-            <div class="w-full lg:w-1/2 relative mt-8 lg:mt-0 flex justify-center">
+            <div class="w-full lg:w-1/2 relative mt-5 lg:mt-0 flex justify-center">
 
                 <div class="relative">
                     <!-- Image Container for Walikota -->
                     <div
-                        class="bg-slate-200 w-[300px] h-[380px] md:w-[450px] md:h-[550px] rounded-b-full overflow-hidden flex items-end justify-center shadow-2xl border-b-6 md:border-b-8 border-blue-900">
+                        class="w-[300px] h-[380px] md:w-[450px] md:h-[460px] rounded-b-full overflow-hidden flex items-end justify-center shadow-2xl border-b-6 md:border-b-8 border-blue-900">
                         <img src="/assets/img/walikota_wakil.jpeg" alt="Walikota & Wakil Walikota Mataram"
                             class="w-full h-auto object-cover transform scale-110">
-                    </div>
-
-                    <!-- Small Floating Branding Logo -->
-                    <div
-                        class="absolute -bottom-4 -left-4 md:-bottom-8 md:-left-8 bg-white p-2 md:p-4 rounded-xl md:rounded-2xl shadow-xl flex items-center justify-center border border-slate-50">
-                        <img src="/assets/img/mataram_branding.jpeg" alt="Mataram Branding"
-                            class="w-10 h-10 md:w-16 md:h-16">
                     </div>
                 </div>
             </div>
