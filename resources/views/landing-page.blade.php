@@ -27,7 +27,7 @@
                 <div class="relative max-w-xl group">
                     <div
                         class="flex items-center bg-white rounded-full shadow-lg p-1 border border-slate-100 overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 transition-all">
-                        <input type="text" placeholder="Cari..."
+                        <input type="text" placeholder="Search..."
                             class="w-full py-4 px-6 outline-none text-slate-600 font-medium">
                         <button class="bg-blue-900 text-white p-4 rounded-full hover:bg-blue-800 transition">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,10 +41,6 @@
 
             <!-- Right Content: Photos -->
             <div class="w-full lg:w-1/2 relative mt-8 lg:mt-0 flex justify-center">
-                <!-- Yellow decorative circle -->
-                <div
-                    class="absolute w-[280px] h-[280px] md:w-[400px] md:h-[400px] bg-yellow-400 rounded-full opacity-60 -z-10 translate-x-6 translate-y-6 md:translate-x-10 md:translate-y-10">
-                </div>
 
                 <div class="relative">
                     <!-- Image Container for Walikota -->
@@ -65,7 +61,6 @@
         </div>
     </div>
 
-    <!-- Extra Quick Links Section (Contoh Tambahan) -->
     <!-- Statistik Dashboard Section -->
     <div class="bg-blue-50 py-16">
         <div class="container mx-auto px-6 md:px-12">
@@ -76,7 +71,7 @@
 
             <!-- Top Row: Charts -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                
+
                 <!-- Pie Chart: Komposisi Instansi -->
                 <div class="bg-white p-6 rounded-2xl border border-blue-100 shadow-xl">
                     <h4 class="font-bold text-blue-900 mb-6">Komposisi Instansi Pengunjung</h4>
@@ -97,29 +92,35 @@
             <!-- Bottom Row: KPI Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                 <!-- Total Visitors -->
-                <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
+                <div
+                    class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
                     <h4 class="text-lg font-medium text-slate-500 mb-2">Total Pengunjung</h4>
-                    <div class="text-5xl font-extrabold text-[#fbbf24] mb-1 group-hover:scale-105 transition">{{ number_format($totalGuests) }}</div>
+                    <div class="text-5xl font-extrabold text-[#fbbf24] mb-1 group-hover:scale-105 transition">
+                        {{ number_format($totalGuests) }}</div>
                     <p class="text-sm text-slate-400">Sejak Awal Tercatat</p>
                 </div>
 
                 <!-- This Year -->
-                <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
+                <div
+                    class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
                     <h4 class="text-lg font-medium text-slate-500 mb-2">Total Tahun Ini</h4>
-                    <div class="text-5xl font-extrabold text-[#60a5fa] mb-1 group-hover:scale-105 transition">{{ number_format($totalThisYear) }}</div>
+                    <div class="text-5xl font-extrabold text-[#60a5fa] mb-1 group-hover:scale-105 transition">
+                        {{ number_format($totalThisYear) }}</div>
                     <p class="text-sm text-slate-400">Tahun {{ date('Y') }}</p>
                 </div>
 
-                 <!-- This Month -->
-                 <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
+                <!-- This Month -->
+                <div
+                    class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
                     <h4 class="text-lg font-medium text-slate-500 mb-2">Bulan Ini</h4>
-                    <div class="text-5xl font-extrabold text-[#34d399] mb-1 group-hover:scale-105 transition">{{ number_format($totalThisMonth) }}</div>
+                    <div class="text-5xl font-extrabold text-[#34d399] mb-1 group-hover:scale-105 transition">
+                        {{ number_format($totalThisMonth) }}</div>
                     <p class="text-sm text-slate-400">Bulan {{ date('F') }}</p>
                 </div>
             </div>
 
-             <!-- Recent Visitors Table (Light/Blue Mode) -->
-             <div class="bg-white rounded-2xl shadow-xl border border-blue-100 overflow-hidden">
+            <!-- Recent Visitors Table (Light/Blue Mode) -->
+            <div class="bg-white rounded-2xl shadow-xl border border-blue-100 overflow-hidden">
                 <div class="p-6 border-b border-blue-50 flex justify-between items-center">
                     <h4 class="font-bold text-blue-900 text-lg">Kunjungan Terakhir</h4>
                     <span class="text-xs font-bold bg-blue-100 text-blue-600 px-3 py-1 rounded-full">Realtime</span>
@@ -136,17 +137,18 @@
                         </thead>
                         <tbody class="divide-y divide-blue-50">
                             @foreach($recentGuests as $guest)
-                            <tr class="hover:bg-blue-50/50 transition duration-200">
-                                <td class="px-6 py-4 font-medium text-slate-700">{{ $guest->name }}</td>
-                                <td class="px-6 py-4 text-slate-500">{{ $guest->agency }}</td>
-                                <td class="px-6 py-4 text-slate-500">{{ $guest->purpose }}</td>
-                                <td class="px-6 py-4 text-slate-400 text-sm whitespace-nowrap">{{ $guest->created_at->diffForHumans() }}</td>
-                            </tr>
+                                <tr class="hover:bg-blue-50/50 transition duration-200">
+                                    <td class="px-6 py-4 font-medium text-slate-700">{{ $guest->nama_tamu }}</td>
+                                    <td class="px-6 py-4 text-slate-500">{{ $guest->asal_instansi }}</td>
+                                    <td class="px-6 py-4 text-slate-500">{{ $guest->keperluan }}</td>
+                                    <td class="px-6 py-4 text-slate-400 text-sm whitespace-nowrap">
+                                        {{ $guest->created_at->diffForHumans() }}</td>
+                                </tr>
                             @endforeach
                             @if($recentGuests->isEmpty())
-                            <tr>
-                                <td colspan="4" class="px-6 py-8 text-center text-slate-400">Belum ada data pengunjung.</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="4" class="px-6 py-8 text-center text-slate-400">Belum ada data pengunjung.</td>
+                                </tr>
                             @endif
                         </tbody>
                     </table>
@@ -155,7 +157,6 @@
 
         </div>
     </div>
-
     <!-- Chart.js Script -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
