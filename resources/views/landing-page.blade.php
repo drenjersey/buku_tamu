@@ -15,11 +15,57 @@
                         Kota Nyaman,<br>
                         Penuh Toleransi.
                     </h2>
-                    <p class="text-3xl md:text-4xl font-bold">
-                        <span class="text-blue-900 italic">Mataram Harum</span>
+                    <p class="text-3xl md:text-4xl font-bold flex items-center justify-center lg:justify-start">
+                        <span class="text-blue-900">Mataram Harum</span>
                         <span class="text-slate-300 mx-2">|</span>
-                        <span class="text-yellow-500">Harmoni</span>
+                        <span class="inline-flex flex-col h-[1.2em] overflow-hidden">
+                            <span class="animate-vertical-slide">
+                                <span class="text-yellow-500 h-[1.2em] flex items-center">Harmoni</span>
+                                <span class="text-yellow-500 h-[1.2em] flex items-center">Ramah</span>
+                                <span class="text-yellow-500 h-[1.2em] flex items-center">Unggul</span>
+                                <span class="text-yellow-500 h-[1.2em] flex items-center">Mandiri</span>
+                                <span class="text-yellow-500 h-[1.2em] flex items-center">Aman</span>
+                            </span>
+                        </span>
                     </p>
+
+                    <style>
+                        @keyframes vertical-slide {
+
+                            0%,
+                            15% {
+                                transform: translateY(0);
+                            }
+
+                            20%,
+                            35% {
+                                transform: translateY(-20%);
+                            }
+
+                            40%,
+                            55% {
+                                transform: translateY(-40%);
+                            }
+
+                            60%,
+                            75% {
+                                transform: translateY(-60%);
+                            }
+
+                            80%,
+                            95% {
+                                transform: translateY(-80%);
+                            }
+
+                            100% {
+                                transform: translateY(0);
+                            }
+                        }
+
+                        .animate-vertical-slide {
+                            animation: vertical-slide 8s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+                        }
+                    </style>
                     <p class="text-slate-500 font-medium">kami menjawab informasi seputar kota</p>
                 </div>
 
