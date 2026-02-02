@@ -61,59 +61,187 @@
         </div>
     </div>
 
-    <!-- Extra Quick Links Section (Contoh Tambahan) -->
-    <div class="bg-white py-16">
+    <!-- Statistik Dashboard Section -->
+    <div class="bg-blue-50 py-16">
         <div class="container mx-auto px-6 md:px-12">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div
-                    class="p-6 rounded-2xl bg-blue-50 hover:bg-blue-100 transition cursor-pointer text-center space-y-3 group">
-                    <div
-                        class="w-16 h-16 bg-blue-900 rounded-2xl mx-auto flex items-center justify-center text-white group-hover:scale-110 transition">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
-                            </path>
-                        </svg>
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-blue-900">Statistik Kunjungan</h3>
+                <p class="text-slate-500 mt-2">Data analitik buku tamu Pemerintah Kota Mataram</p>
+            </div>
+
+            <!-- Top Row: Charts -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+
+                <!-- Pie Chart: Komposisi Instansi -->
+                <div class="bg-white p-6 rounded-2xl border border-blue-100 shadow-xl">
+                    <h4 class="font-bold text-blue-900 mb-6">Komposisi Instansi Pengunjung</h4>
+                    <div class="relative h-64 w-full flex justify-center">
+                        <canvas id="pieChart"></canvas>
                     </div>
-                    <h4 class="font-bold text-blue-900">Portal Berita</h4>
                 </div>
-                <div
-                    class="p-6 rounded-2xl bg-slate-50 hover:bg-slate-100 transition cursor-pointer text-center space-y-3 group">
-                    <div
-                        class="w-16 h-16 bg-slate-800 rounded-2xl mx-auto flex items-center justify-center text-white group-hover:scale-110 transition">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                            </path>
-                        </svg>
+
+                <!-- Bar Chart: Bulanan -->
+                <div class="bg-white p-6 rounded-2xl border border-blue-100 shadow-xl">
+                    <h4 class="font-bold text-blue-900 mb-6">Pengunjung per Bulan ({{ date('Y') }})</h4>
+                    <div class="relative h-64 w-full">
+                        <canvas id="barChart"></canvas>
                     </div>
-                    <h4 class="font-bold text-slate-800">Dokumen Publik</h4>
-                </div>
-                <div
-                    class="p-6 rounded-2xl bg-yellow-50 hover:bg-yellow-100 transition cursor-pointer text-center space-y-3 group">
-                    <div
-                        class="w-16 h-16 bg-yellow-600 rounded-2xl mx-auto flex items-center justify-center text-white group-hover:scale-110 transition">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h4 class="font-bold text-yellow-700">Galeri Kota</h4>
-                </div>
-                <div
-                    class="p-6 rounded-2xl bg-green-50 hover:bg-green-100 transition cursor-pointer text-center space-y-3 group">
-                    <div
-                        class="w-16 h-16 bg-green-700 rounded-2xl mx-auto flex items-center justify-center text-white group-hover:scale-110 transition">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h4 class="font-bold text-green-800">Layanan IPKD</h4>
                 </div>
             </div>
+
+            <!-- Bottom Row: KPI Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <!-- Total Visitors -->
+                <div
+                    class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
+                    <h4 class="text-lg font-medium text-slate-500 mb-2">Total Pengunjung</h4>
+                    <div class="text-5xl font-extrabold text-[#fbbf24] mb-1 group-hover:scale-105 transition">
+                        {{ number_format($totalGuests) }}</div>
+                    <p class="text-sm text-slate-400">Sejak Awal Tercatat</p>
+                </div>
+
+                <!-- This Year -->
+                <div
+                    class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
+                    <h4 class="text-lg font-medium text-slate-500 mb-2">Total Tahun Ini</h4>
+                    <div class="text-5xl font-extrabold text-[#60a5fa] mb-1 group-hover:scale-105 transition">
+                        {{ number_format($totalThisYear) }}</div>
+                    <p class="text-sm text-slate-400">Tahun {{ date('Y') }}</p>
+                </div>
+
+                <!-- This Month -->
+                <div
+                    class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
+                    <h4 class="text-lg font-medium text-slate-500 mb-2">Bulan Ini</h4>
+                    <div class="text-5xl font-extrabold text-[#34d399] mb-1 group-hover:scale-105 transition">
+                        {{ number_format($totalThisMonth) }}</div>
+                    <p class="text-sm text-slate-400">Bulan {{ date('F') }}</p>
+                </div>
+            </div>
+
+            <!-- Recent Visitors Table (Light/Blue Mode) -->
+            <div class="bg-white rounded-2xl shadow-xl border border-blue-100 overflow-hidden">
+                <div class="p-6 border-b border-blue-50 flex justify-between items-center">
+                    <h4 class="font-bold text-blue-900 text-lg">Kunjungan Terakhir</h4>
+                    <span class="text-xs font-bold bg-blue-100 text-blue-600 px-3 py-1 rounded-full">Realtime</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-blue-50 text-blue-600 font-semibold text-sm uppercase tracking-wider">
+                            <tr>
+                                <th class="px-6 py-4">Nama</th>
+                                <th class="px-6 py-4">Instansi/Asal</th>
+                                <th class="px-6 py-4">Keperluan</th>
+                                <th class="px-6 py-4">Waktu</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-blue-50">
+                            @foreach($recentGuests as $guest)
+                                <tr class="hover:bg-blue-50/50 transition duration-200">
+                                    <td class="px-6 py-4 font-medium text-slate-700">{{ $guest->nama_tamu }}</td>
+                                    <td class="px-6 py-4 text-slate-500">{{ $guest->asal_instansi }}</td>
+                                    <td class="px-6 py-4 text-slate-500">{{ $guest->keperluan }}</td>
+                                    <td class="px-6 py-4 text-slate-400 text-sm whitespace-nowrap">
+                                        {{ $guest->created_at->diffForHumans() }}</td>
+                                </tr>
+                            @endforeach
+                            @if($recentGuests->isEmpty())
+                                <tr>
+                                    <td colspan="4" class="px-6 py-8 text-center text-slate-400">Belum ada data pengunjung.</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
+    <!-- Chart.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DATA FROM CONTROLLER
+            const pieData = @json($pieData);
+            const monthlyData = @json($monthlyData);
+
+            // 1. PIE CHART (Doughnut)
+            const ctxPie = document.getElementById('pieChart').getContext('2d');
+            new Chart(ctxPie, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(pieData),
+                    datasets: [{
+                        data: Object.values(pieData),
+                        backgroundColor: [
+                            '#fbbf24', // yellow
+                            '#60a5fa', // blue
+                            '#818cf8', // indigo
+                            '#34d399', // green
+                            '#f472b6', // pink
+                            '#a78bfa', // purple
+                            '#cbd5e1'  // slate
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: '#475569', // slate-600
+                                font: { size: 12 },
+                                boxWidth: 12
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+
+            // 2. BAR CHART
+            const ctxBar = document.getElementById('barChart').getContext('2d');
+            new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: monthlyData.map(data => data.month),
+                    datasets: [{
+                        label: 'Pengunjung',
+                        data: monthlyData.map(data => data.count),
+                        backgroundColor: '#60a5fa', // blue-400
+                        borderRadius: 4,
+                        barThickness: 'flex',
+                        maxBarThickness: 32
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1e3a8a',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#e2e8f0' }, // slate-200
+                            ticks: { color: '#64748b', stepSize: 1, precision: 0 }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#64748b', font: { size: 11 } }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
