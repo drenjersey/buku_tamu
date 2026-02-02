@@ -41,4 +41,25 @@ class GuestController extends Controller
         // Redirect balik dengan pesan sukses
         return redirect()->route('guest.create')->with('success', 'Data kunjungan berhasil disimpan!');
     }
+
+    // 3. Menampilkan Halaman Rekap
+    public function rekap(Request $request)
+    {
+        $startDate = $request->get('start_date');
+        $endDate = $request->get('end_date');
+
+        $query = DB::table('guests');
+
+        if ($startDate) {
+            $query->whereDate('tanggal_kunjungan', '>=', $startDate);
+        }
+
+        if ($endDate) {
+            $query->whereDate('tanggal_kunjungan', '<=', $endDate);
+        }
+
+        $guests = $query->orderBy('tanggal_kunjungan', 'desc')->paginate(10);
+
+        return view('guests.rekap', compact('guests', 'startDate', 'endDate'));
+    }
 }

@@ -40,37 +40,37 @@
             <div>
                 <h1 class="font-bold text-lg leading-tight text-blue-900">Pemerintah<br>Kota Mataram</h1>
             </div>
-            
+
         </div>
 
         <nav class="hidden lg:flex items-center gap-8 font-medium text-slate-600">
-    
-    {{-- 1. MENU HOME --}}
-    <a href="{{ route('home') }}" 
-       class="{{ request()->routeIs('home') 
-                ? 'text-blue-700 font-bold border-b-2 border-blue-700' 
-                : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
-       Home
-    </a>
 
-    {{-- 2. MENU ISI FORM --}}
-    {{-- Menggunakan 'guest.*' agar tetap aktif saat di halaman create atau store --}}
-    <a href="{{ route('guest.create') }}" 
-       class="text-sm font-bold {{ request()->routeIs('guest.*') 
-                ? 'text-blue-700 border-b-2 border-blue-700' 
-                : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
-       Isi Form
-    </a>
+            {{-- 1. MENU HOME --}}
+            <a href="{{ route('home') }}"
+                class="{{ request()->routeIs('home')
+    ? 'text-blue-700 font-bold border-b-2 border-blue-700'
+    : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
+                Home
+            </a>
 
-    {{-- 3. MENU REKAP (Contoh) --}}
-    <a href="#" 
-       class="{{ request()->routeIs('recap.*') 
-                ? 'text-blue-700 font-bold border-b-2 border-blue-700' 
-                : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
-       Rekap
-    </a>
-</nav>
-</header>
+            {{-- 2. MENU ISI FORM --}}
+            {{-- Menggunakan 'guest.*' agar tetap aktif saat di halaman create atau store --}}
+            <a href="{{ route('guest.create') }}"
+                class="text-sm font-bold {{ request()->routeIs('guest.*')
+    ? 'text-blue-700 border-b-2 border-blue-700'
+    : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
+                Isi Form
+            </a>
+
+            {{-- 3. MENU REKAP --}}
+            <a href="{{ route('guest.rekap') }}"
+                class="text-sm font-bold {{ request()->routeIs('guest.rekap')
+    ? 'text-blue-700 border-b-2 border-blue-700'
+    : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
+                Rekap
+            </a>
+        </nav>
+    </header>
 
     <main>
         @yield('content')

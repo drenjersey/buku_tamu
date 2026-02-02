@@ -13,3 +13,6 @@ Route::post('/buku-tamu', [GuestController::class, 'store'])->name('guest.store'
 
 // Route Statistik (Opsional, jika ingin akses via /statistik juga)
 Route::get('/statistik', [StatistikController::class, 'index'])->name('stats.index');
+
+// Route Rekap
+Route::get('/rekap', [GuestController::class, 'rekap'])->name('guest.rekap');
