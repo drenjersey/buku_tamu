@@ -41,10 +41,6 @@
 
             <!-- Right Content: Photos -->
             <div class="w-full lg:w-1/2 relative mt-8 lg:mt-0 flex justify-center">
-                <!-- Yellow decorative circle -->
-                <div
-                    class="absolute w-[280px] h-[280px] md:w-[400px] md:h-[400px] bg-yellow-400 rounded-full opacity-60 -z-10 translate-x-6 translate-y-6 md:translate-x-10 md:translate-y-10">
-                </div>
 
                 <div class="relative">
                     <!-- Image Container for Walikota -->
