@@ -2,20 +2,23 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuestController;
-use App\Http\Controllers\StatistikController;
+use App\Http\Controllers\AuthController;
 
-// Route Home (Landing Page + Statistik)
-Route::get('/', [StatistikController::class, 'index'])->name('home');
+// 1. Landing Page (Sekarang ada Formnya)
+Route::get('/', function () {
+    return app(GuestController::class)->landingPage(); 
+})->name('home');
 
-// Route Buku Tamu
-Route::get('/buku-tamu', [GuestController::class, 'create'])->name('guest.create');
+// 2. Proses Simpan Form
 Route::post('/buku-tamu', [GuestController::class, 'store'])->name('guest.store');
 
-// Route Statistik (Opsional, jika ingin akses via /statistik juga)
-Route::get('/statistik', [StatistikController::class, 'index'])->name('stats.index');
+// 3. LOGIN CUSTOM
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login')->middleware('guest');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Route Rekap
-Route::get('/rekap', [GuestController::class, 'rekap'])->name('guest.rekap');
-
-// Route untuk Export CSV
-Route::get('/rekap/export', [GuestController::class, 'exportCsv'])->name('guest.export');
+// 4. REKAP & EXPORT (DILINDUNGI PASSWORD / AUTH)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/rekap', [GuestController::class, 'rekap'])->name('guest.rekap');
+    Route::get('/rekap/export', [GuestController::class, 'exportCsv'])->name('guest.export');
+});

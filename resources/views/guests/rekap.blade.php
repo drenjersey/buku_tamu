@@ -67,8 +67,8 @@
                                 <th class="px-8 py-5 text-sm font-bold uppercase tracking-wider">Instansi</th>
                                 <th class="px-8 py-5 text-sm font-bold uppercase tracking-wider">Personil</th>
                                 <th class="px-8 py-5 text-sm font-bold uppercase tracking-wider">Keperluan</th>
-                                <th class="px-8 py-5 text-sm font-bold uppercase tracking-wider rounded-tr-[2rem]">Penerima
-                                </th>
+                                <th class="px-8 py-5 text-sm font-bold uppercase tracking-wider">Penerima</th>
+                                <th class="px-8 py-5 text-sm font-bold uppercase tracking-wider rounded-tr-[2rem]">Foto</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-blue-50">
@@ -99,6 +99,13 @@
                                             <div class="w-2 h-2 rounded-full bg-green-500"></div>
                                             <span class="font-medium text-slate-700">{{ $guest->penerima_kunjungan }}</span>
                                         </div>
+                                    </td>
+                                    <td class="px-8 py-5 text-slate-600">
+                                        @if($guest->foto)
+                                            <img src="{{ asset('storage/' . $guest->foto) }}" class="h-16 w-16 object-cover rounded-lg border border-slate-200 shadow-sm" alt="Foto">
+                                        @else
+                                            <span class="text-xs text-slate-400">No Image</span>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

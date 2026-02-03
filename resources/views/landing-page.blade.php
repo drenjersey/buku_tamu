@@ -1,85 +1,92 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="relative min-h-[600px] flex items-center overflow-hidden">
-        <!-- Background Elements -->
-        <div class="absolute inset-0 bg-soft skew-y-1 origin-top-left -z-10 h-[90%] rounded-br-[100px]"></div>
+    <div class="relative min-h-[800px] flex items-center justify-center bg-gradient-to-br from-blue-50 to-white overflow-hidden py-12">
+        
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+            <div class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-blue-100/50 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-[-10%] left-[-5%] w-96 h-96 bg-yellow-100/50 rounded-full blur-3xl"></div>
+        </div>
 
-        <div class="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row items-center justify-between py-12">
-
-            <!-- Left Content: Text & Search -->
-            <div class="w-full lg:w-1/2 space-y-8 z-10 text-center lg:text-left">
-                <div class="space-y-4">
-                    <h2 class="text-5xl md:text-7xl font-extrabold text-blue-900 leading-tight">
-                        Mataram,<br>
-                        Kota Nyaman,<br>
-                        Penuh Toleransi.
-                    </h2>
-                    <p class="text-3xl md:text-4xl font-bold flex items-center justify-center lg:justify-start">
-                        <span class="text-blue-900">Mataram Harum</span>
-                        <span class="text-slate-300 mx-2">|</span>
-                        <span class="inline-flex flex-col h-[1.2em] overflow-hidden">
-                            <span class="animate-vertical-slide">
-                                <span class="text-yellow-500 h-[1.2em] flex items-center">Harmoni</span>
-                                <span class="text-yellow-500 h-[1.2em] flex items-center">Ramah</span>
-                                <span class="text-yellow-500 h-[1.2em] flex items-center">Unggul</span>
-                                <span class="text-yellow-500 h-[1.2em] flex items-center">Mandiri</span>
-                                <span class="text-yellow-500 h-[1.2em] flex items-center">Aman</span>
-                            </span>
-                        </span>
-                    </p>
-
-                    <style>
-                        @keyframes vertical-slide {
-
-                            0%,
-                            15% {
-                                transform: translateY(0);
-                            }
-
-                            20%,
-                            35% {
-                                transform: translateY(-20%);
-                            }
-
-                            40%,
-                            55% {
-                                transform: translateY(-40%);
-                            }
-
-                            60%,
-                            75% {
-                                transform: translateY(-60%);
-                            }
-
-                            80%,
-                            95% {
-                                transform: translateY(-80%);
-                            }
-
-                            100% {
-                                transform: translateY(0);
-                            }
-                        }
-
-                        .animate-vertical-slide {
-                            animation: vertical-slide 8s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
-                        }
-                    </style>    
+        <div class="container mx-auto px-4 flex justify-center items-center relative z-10">
+            
+            <div class="bg-white p-8 md:p-10 rounded-3xl shadow-2xl border border-blue-100 w-full max-w-xl">
+                
+                <div class="mb-8 text-center">
+                    <h2 class="text-3xl font-extrabold text-blue-900">Isi Buku Tamu</h2>
+                    <p class="text-slate-500 text-sm mt-2">Silakan isi form di bawah ini untuk pendataan tamu.</p>
                 </div>
-            </div>
 
-            <!-- Right Content: Photos -->
-            <div class="w-full lg:w-1/2 relative mt-5 lg:mt-0 flex justify-center">
-
-                <div class="relative">
-                    <!-- Image Container for Walikota -->
-                    <div
-                        class="w-[300px] h-[380px] md:w-[450px] md:h-[460px] rounded-b-full overflow-hidden flex items-end justify-center shadow-2xl border-b-6 md:border-b-8 border-blue-900">
-                        <img src="/assets/img/walikota_wakil.jpeg" alt="Walikota & Wakil Walikota Mataram"
-                            class="w-full h-auto object-cover transform scale-110">
+                @if(session('success'))
+                    <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        {{ session('success') }}
                     </div>
-                </div>
+                @endif
+
+                <form action="{{ route('guest.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+                    @csrf
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wide">Tanggal <span class="text-red-500">*</span></label>
+                            <input type="date" name="tanggal_kunjungan" value="{{ date('Y-m-d') }}" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition outline-none text-sm font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wide">Jml Personil <span class="text-red-500">*</span></label>
+                            <input type="number" name="jumlah_personil" value="1" min="1" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition outline-none text-sm font-medium">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wide">Nama Lengkap (Perwakilan) <span class="text-red-500">*</span></label>
+                        <input type="text" name="nama_tamu" placeholder="Contoh: Budi Santoso" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition outline-none text-sm font-medium">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wide">Asal Instansi <span class="text-red-500">*</span></label>
+                        <input type="text" name="asal_instansi" placeholder="Contoh: Dinas Kominfo Lombok Barat" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition outline-none text-sm font-medium">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wide">Bertemu Siapa? <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <select name="penerima_kunjungan" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition outline-none text-sm font-medium appearance-none">
+                                <option value="" disabled selected>-- Pilih Penerima --</option>
+                                <option value="Kepala Dinas">Kepala Dinas</option>
+                                <option value="Sekretaris Dinas">Sekretaris Dinas</option>
+                                <option value="Kabid IKP">Kabid IKP</option>
+                                <option value="Kabid Aptika">Kabid Aptika</option>
+                                <option value="Staf Teknis">Staf Teknis</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wide">Keperluan <span class="text-gray-400 font-normal normal-case">(Singkat saja)</span> <span class="text-red-500">*</span></label>
+                        <textarea name="keperluan" rows="2" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition outline-none text-sm font-medium"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wide">Foto Dokumentasi <span class="text-red-500">*</span></label>
+                        <div class="relative border-2 border-dashed border-slate-300 rounded-xl p-4 hover:bg-slate-50 transition text-center group">
+                            <input type="file" name="foto" accept="image/*" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            <div class="text-slate-500 group-hover:text-blue-600 transition">
+                                <svg class="mx-auto h-8 w-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="text-sm font-medium">Klik untuk upload foto</span>
+                                <p class="text-[10px] mt-1 text-slate-400">JPG/PNG, Maks 2MB</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-900 text-white font-bold py-4 rounded-xl hover:bg-blue-800 transition shadow-lg shadow-blue-900/20 transform hover:-translate-y-1 flex justify-center items-center gap-2">
+                        <span>SIMPAN DATA KUNJUNGAN</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -118,7 +125,7 @@
                 <div
                     class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
                     <h4 class="text-lg font-medium text-slate-500 mb-2">Total Pengunjung</h4>
-                    <div class="text-5xl font-extrabold text-[#fbbf24] mb-1 group-hover:scale-105 transition">
+                    <div class="text-5xl font-extrabold text-gray-800 mb-1 group-hover:scale-105 transition">
                         {{ number_format($totalGuests) }}</div>
                     <p class="text-sm text-slate-400">Sejak Awal Tercatat</p>
                 </div>
@@ -127,7 +134,7 @@
                 <div
                     class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
                     <h4 class="text-lg font-medium text-slate-500 mb-2">Total Tahun Ini</h4>
-                    <div class="text-5xl font-extrabold text-[#60a5fa] mb-1 group-hover:scale-105 transition">
+                    <div class="text-5xl font-extrabold text-gray-800 mb-1 group-hover:scale-105 transition">
                         {{ number_format($totalThisYear) }}</div>
                     <p class="text-sm text-slate-400">Tahun {{ date('Y') }}</p>
                 </div>
@@ -136,7 +143,7 @@
                 <div
                     class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
                     <h4 class="text-lg font-medium text-slate-500 mb-2">Bulan Ini</h4>
-                    <div class="text-5xl font-extrabold text-[#34d399] mb-1 group-hover:scale-105 transition">
+                    <div class="text-5xl font-extrabold text-gray-800 mb-1 group-hover:scale-105 transition">
                         {{ number_format($totalThisMonth) }}</div>
                     <p class="text-sm text-slate-400">Bulan {{ date('F') }}</p>
                 </div>

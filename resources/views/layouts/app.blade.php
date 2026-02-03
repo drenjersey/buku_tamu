@@ -43,7 +43,7 @@
             <img src="{{ asset('assets/img/logo_mataram.jpeg') }}" alt="Logo Mataram" class="h-12 w-auto object-contain">
             
             <div>
-                <h1 class="font-bold text-lg leading-tight -ml-1 text-blue-900">Pemerintah Kota Mataram</h1>
+                <h1 class="font-bold text-lg leading-tightyyy text-blue-900">Pemerintah Kota Mataram</h1>
             </div>
         </div>
 
@@ -58,16 +58,7 @@
                 Home
             </a>
 
-            {{-- 2. MENU ISI FORM --}}
-            {{-- Aktif jika route 'guest.create' ATAU 'guest.store' (biar pas simpan tetap nyala) --}}
-            <a href="{{ route('guest.create') }}"
-                class="text-sm font-bold {{ request()->routeIs('guest.create') || request()->routeIs('guest.store')
-                    ? 'text-blue-700 border-b-2 border-blue-700' 
-                    : 'text-gray-600 hover:text-blue-700 transition border-b-2 border-transparent hover:border-blue-700' }}">
-                Isi Form
-            </a>
-
-            {{-- 3. MENU REKAP --}}
+            {{-- 2. MENU REKAP --}}
             {{-- Aktif jika route 'guest.rekap' ATAU 'guest.export' (biar pas download CSV tetap nyala) --}}
             <a href="{{ route('guest.rekap') }}"
                 class="text-sm font-bold {{ request()->routeIs('guest.rekap') || request()->routeIs('guest.export')

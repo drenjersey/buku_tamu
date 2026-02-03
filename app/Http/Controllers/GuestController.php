@@ -17,15 +17,23 @@ class GuestController extends Controller
     // 2. Menyimpan Data ke Database 'buku_tamu' -> tabel 'guests'
     public function store(Request $request)
     {
-        // Validasi input
+       // Tambahkan validasi foto
         $request->validate([
             'nama_tamu' => 'required',
             'asal_instansi' => 'required',
             'jumlah_personil' => 'required|integer',
             'keperluan' => 'required',
-            'penerima_kunjungan' => 'required',
+            'penerima_kunjungan' => 'required', // Wajib
             'tanggal_kunjungan' => 'required|date',
+            'foto' => 'required|image|max:2048', // WAJIB ADA FOTO (Maks 2MB)
         ]);
+
+        // Handle Upload Foto
+        $fotoPath = null;
+        if ($request->hasFile('foto')) {
+            // Simpan di folder public/storage/uploads
+            $fotoPath = $request->file('foto')->store('uploads', 'public');
+        }
 
         // Insert ke Database
         DB::table('guests')->insert([
@@ -35,12 +43,13 @@ class GuestController extends Controller
             'keperluan' => $request->keperluan,
             'penerima_kunjungan' => $request->penerima_kunjungan,
             'tanggal_kunjungan' => $request->tanggal_kunjungan,
+            'foto' => $fotoPath, // Simpan path foto
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         // Redirect balik dengan pesan sukses
-        return redirect()->route('guest.create')->with('success', 'Data kunjungan berhasil disimpan!');
+        return redirect()->route('home')->with('success', 'Data kunjungan berhasil disimpan!');
     }
 
     // 3. Menampilkan Halaman Rekap
@@ -118,6 +127,20 @@ class GuestController extends Controller
 
         fclose($file);
     }, 200, $headers);
+}
+
+public function landingPage()
+{
+    $totalGuests = \App\Models\Guest::count();
+    $totalThisYear = \App\Models\Guest::whereYear('created_at', date('Y'))->count();
+    $totalThisMonth = \App\Models\Guest::whereMonth('created_at', date('m'))->count();
+    $recentGuests = \App\Models\Guest::latest()->take(5)->get();
+    
+    // Data Grafik (Pie & Bar) - Sesuaikan dengan logika statistik Anda
+    $pieData = []; 
+    $monthlyData = [];
+
+    return view('landing-page', compact('totalGuests', 'totalThisYear', 'totalThisMonth', 'recentGuests', 'pieData', 'monthlyData'));
 }
 
 }

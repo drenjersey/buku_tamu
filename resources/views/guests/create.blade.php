@@ -47,6 +47,14 @@
                     </div>
                 </div>
 
+                <div>
+                    <label for="nomor_hp atau whatsapp" class="block text-sm font-medium text-gray-700">Nomor HP atau Whatsapp</label>
+                    <div class="mt-1">
+                        <input type="text" name="nomor_hp" id="nomor_hp" required placeholder="Contoh: 081234567890"
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="jumlah_personil" class="block text-sm font-medium text-gray-700">Jumlah Personil</label>
@@ -57,20 +65,63 @@
                     </div>
 
                     <div>
-                        <label for="penerima_kunjungan" class="block text-sm font-medium text-gray-700">Bertemu Dengan</label>
-                        <div class="mt-1">
-                            <select name="penerima_kunjungan" id="penerima_kunjungan" required
-                                class="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <label class="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wide">Bertemu Siapa? <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <select id="select_penerima" name="penerima_kunjungan" onchange="toggleLainnya(this)" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition outline-none text-sm font-medium appearance-none">
                                 <option value="" disabled selected>-- Pilih Penerima --</option>
                                 <option value="Kepala Dinas">Kepala Dinas</option>
                                 <option value="Sekretaris Dinas">Sekretaris Dinas</option>
                                 <option value="Kabid IKP">Kabid IKP</option>
-                                <option value="Kabid Aptika">Kabid Aptika</option>
+                                <option value="Kabid e-Government">Kabid e-Government</option>
+                                <option value="Kabid Statistik">Kabid Statistik</option>
+                                <option value="Kabid Persandian Keamanan Informasi">Kabid Persandian Keamanan Informasi</option>
                                 <option value="Staf Teknis">Staf Teknis</option>
                                 <option value="Lainnya">Lainnya</option>
                             </select>
+                            
+                            <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+
+                        <div id="input_lainnya_div" class="hidden mt-3 animate-fade-in-down">
+                            <label class="block text-[10px] font-bold text-slate-400 mb-1 ml-1">Ketik Jabatan/Nama Tujuan:</label>
+                            <input type="text" id="input_lainnya" placeholder="Contoh: Staff Keuangan / Pak Budi" class="w-full px-4 py-3 bg-white border border-blue-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm font-medium shadow-sm">
                         </div>
                     </div>
+
+                    <script>
+                        function toggleLainnya(selectElement) {
+                            var inputDiv = document.getElementById('input_lainnya_div');
+                            var inputField = document.getElementById('input_lainnya');
+
+                            if (selectElement.value === 'Lainnya') {
+                                // A. Jika pilih 'Lainnya':
+                                // 1. Munculkan kotak input
+                                inputDiv.classList.remove('hidden');
+                                
+                                // 2. MATIKAN select agar tidak terkirim datanya
+                                selectElement.removeAttribute('name'); 
+                                
+                                // 3. NYALAKAN input manual agar dia yang terkirim sebagai 'penerima_kunjungan'
+                                inputField.setAttribute('name', 'penerima_kunjungan');
+                                inputField.setAttribute('required', true);
+                                inputField.focus(); // Otomatis kursor kesitu
+                            } else {
+                                // B. Jika pilih pejabat biasa:
+                                // 1. Sembunyikan kotak input
+                                inputDiv.classList.add('hidden');
+                                
+                                // 2. NYALAKAN select kembali
+                                selectElement.setAttribute('name', 'penerima_kunjungan');
+                                
+                                // 3. MATIKAN input manual
+                                inputField.removeAttribute('name');
+                                inputField.removeAttribute('required');
+                                inputField.value = ''; // Kosongkan isinya
+                            }
+                        }
+                    </script>
                 </div>
 
                 <div>
