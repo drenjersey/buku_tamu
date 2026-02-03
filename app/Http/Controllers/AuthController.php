@@ -31,6 +31,8 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        
+        // Redirect ke Halaman Depan (Bukan Login) agar tamu bisa langsung isi form
+        return redirect('/'); 
     }
 }

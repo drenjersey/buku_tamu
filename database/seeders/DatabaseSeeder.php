@@ -2,23 +2,28 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        \App\Models\User::factory()->create([
-        'name' => 'Admin Diskominfo',
-        'email' => 'admin@mataram.kota.go.id',
-        'password' => bcrypt('mataram123'), // Passwordnya ini
-    ]);
+        // 1. Buat Akun SUPER ADMIN (Si Bos)
+        User::create([
+            'name' => 'Super Administrator',
+            'email' => 'super@mataram.go.id',
+            'password' => Hash::make('password'), // Passwordnya 'password'
+            'role' => 'superadmin', // Kuncinya disini
+        ]);
+
+        // 2. Buat Akun PETUGAS (Bawahan)
+        User::create([
+            'name' => 'Budi Petugas',
+            'email' => 'petugas@mataram.go.id',
+            'password' => Hash::make('password'),
+            'role' => 'petugas', // Kuncinya disini
+        ]);
     }
 }
