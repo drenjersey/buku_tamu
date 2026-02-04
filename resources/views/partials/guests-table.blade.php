@@ -1,6 +1,6 @@
 <div class="overflow-x-auto max-h-[500px] overflow-y-auto"> 
     <table class="w-full text-left relative border-collapse">
-        <thead class="bg-slate-50 text-slate-600 font-bold text-xs uppercase tracking-wider sticky top-0 z-10 shadow-sm">
+        <thead class="bg-slate-50 text-gray-900 font-semibold text-sm tracking-wider sticky top-0 z-10 shadow-sm">
             <tr>
                 <th class="px-6 py-4 border-b border-slate-200">Nama Pengunjung</th>
                 <th class="px-6 py-4 border-b border-slate-200">Asal Instansi</th>

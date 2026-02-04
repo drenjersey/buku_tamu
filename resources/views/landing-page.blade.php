@@ -5,14 +5,14 @@
 
     <div class="relative min-h-[800px] flex items-center justify-center bg-gradient-to-br from-blue-50 to-white overflow-hidden py-12">
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-            <div class="absolute top-[-10%] right-[-5%] w-96 h-96 bg-blue-100/50 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-[-10%] left-[-5%] w-96 h-96 bg-yellow-100/50 rounded-full blur-3xl"></div>
+            <div class="absolute top-[-10%] right-[-5%] w-72 h-72 md:w-96 md:h-96 bg-blue-100/50 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-[-10%] left-[-5%] w-72 h-72 md:w-96 md:h-96 bg-yellow-100/50 rounded-full blur-3xl"></div>
         </div>
 
         <div class="container mx-auto px-4 flex justify-center items-center relative z-10">
-            <div class="bg-white p-8 md:p-10 rounded-3xl shadow-2xl border border-blue-100 w-full max-w-xl">
+            <div class="bg-white p-6 md:p-10 rounded-xl shadow-2xl border border-blue-100 w-full max-w-xl">
                 <div class="mb-8 text-center">
-                    <h2 class="text-3xl font-extrabold text-blue-900">Isi Buku Tamu</h2>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-blue-900">Isi Buku Tamu</h2>
                     <p class="text-slate-500 text-sm mt-2">Silakan isi form di bawah ini untuk pendataan tamu.</p>
                 </div>
 
@@ -80,17 +80,9 @@
                             var inputDiv = document.getElementById('input_lainnya_div');
                             var inputField = document.getElementById('input_lainnya');
                             if (selectElement.value === 'Lainnya') {
-                                inputDiv.classList.remove('hidden');
-                                selectElement.removeAttribute('name'); 
-                                inputField.setAttribute('name', 'penerima_kunjungan');
-                                inputField.setAttribute('required', true);
-                                inputField.focus();
+                                inputDiv.classList.remove('hidden'); selectElement.removeAttribute('name'); inputField.setAttribute('name', 'penerima_kunjungan'); inputField.setAttribute('required', true); inputField.focus();
                             } else {
-                                inputDiv.classList.add('hidden');
-                                selectElement.setAttribute('name', 'penerima_kunjungan');
-                                inputField.removeAttribute('name');
-                                inputField.removeAttribute('required');
-                                inputField.value = '';
+                                inputDiv.classList.add('hidden'); selectElement.setAttribute('name', 'penerima_kunjungan'); inputField.removeAttribute('name'); inputField.removeAttribute('required'); inputField.value = '';
                             }
                         }
                     </script>
@@ -133,9 +125,9 @@
     </div>
 
     <div class="bg-blue-50 py-16">
-        <div class="container mx-auto px-6 md:px-12">
+        <div class="container mx-auto px-4 md:px-12">
             <div class="text-center mb-12">
-                <h3 class="text-3xl font-bold text-blue-900">Statistik Kunjungan</h3>
+                <h3 class="text-2xl md:text-3xl font-bold text-blue-900">Statistik Kunjungan</h3>
                 <p class="text-slate-500 mt-2">Data analitik buku tamu Pemerintah Kota Mataram</p>
             </div>
 
@@ -154,18 +146,18 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300 text-center">
                     <h4 class="text-lg font-medium text-slate-500 mb-2">Total Pengunjung</h4>
                     <div class="text-5xl font-extrabold text-gray-800 mb-1 group-hover:scale-105 transition">{{ number_format($totalGuests) }}</div>
                     <p class="text-sm text-slate-400">Sejak Awal Tercatat</p>
                 </div>
-                <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
+                <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300 text-center">
                     <h4 class="text-lg font-medium text-slate-500 mb-2">Total Tahun Ini</h4>
                     <div class="text-5xl font-extrabold text-gray-800 mb-1 group-hover:scale-105 transition">{{ number_format($totalThisYear) }}</div>
                     <p class="text-sm text-slate-400">Tahun {{ date('Y') }}</p>
                 </div>
-                <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300">
+                <div class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300 text-center">
                     <h4 class="text-lg font-medium text-slate-500 mb-2">Bulan Ini</h4>
                     <div class="text-5xl font-extrabold text-gray-800 mb-1 group-hover:scale-105 transition">{{ number_format($totalThisMonth) }}</div>
                     <p class="text-sm text-slate-400">Bulan {{ date('F') }}</p>
@@ -200,7 +192,7 @@
                             </select>
 
                             <select id="filter_tahun" class="w-1/2 md:w-auto px-3 py-2 border border-slate-200 rounded-lg text-sm bg-slate-50 focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer">
-                                <option value="">- Thn -</option>
+                                <option value="">- Tahun -</option>
                                 @for($y = date('Y'); $y >= date('Y')-2; $y--)
                                     <option value="{{ $y }}">{{ $y }}</option>
                                 @endfor
@@ -213,7 +205,7 @@
                     </div>
                 </div>
 
-                <div id="guest-table-container">
+                <div id="guest-table-container" class="overflow-x-auto">
                     @include('partials.guests-table')
                 </div>
             </div>
@@ -297,30 +289,7 @@
             $('#filter_tahun').val('');
             $('#live_search').trigger('keyup');
         }
-    </script>
-
-    <div id="cameraModal" class="fixed inset-0 z-50 hidden bg-black/90 flex items-center justify-center">
-        <div class="relative w-full max-w-lg bg-black rounded-2xl overflow-hidden shadow-2xl border border-gray-800">
-            <div id="flashEffect" class="absolute inset-0 bg-white opacity-0 pointer-events-none z-20 transition-opacity duration-100"></div>
-            <video id="videoElement" autoplay playsinline class="w-full h-auto bg-black transform scale-x-[-1]"></video> <canvas id="canvasElement" class="hidden"></canvas>
-            <div class="absolute bottom-6 left-0 right-0 flex justify-center items-center gap-6 z-10">
-                <button type="button" onclick="closeCameraModal()" class="bg-gray-600/50 backdrop-blur text-white p-3 rounded-full hover:bg-gray-500 transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-                <button type="button" onclick="takeSnapshot()" class="bg-white p-1 rounded-full border-4 border-gray-300 hover:border-blue-500 transition transform hover:scale-110">
-                    <div class="w-14 h-14 bg-white rounded-full border-2 border-black"></div>
-                </button>
-                <button type="button" onclick="switchCamera()" class="bg-gray-600/50 backdrop-blur text-white p-3 rounded-full hover:bg-gray-500 transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                </button>
-            </div>
-            <div class="absolute top-4 left-0 right-0 text-center">
-                <span class="bg-black/50 text-white text-xs px-3 py-1 rounded-full backdrop-blur">Sesuaikan Wajah dalam Bingkai</span>
-            </div>
-        </div>
-    </div>
-
-    <script>
+        
         let videoStream;
         let currentFacingMode = 'user'; 
 
@@ -385,4 +354,25 @@
             }
         }
     </script>
+
+    <div id="cameraModal" class="fixed inset-0 z-50 hidden bg-black/90 flex items-center justify-center">
+        <div class="relative w-full max-w-lg bg-black rounded-2xl overflow-hidden shadow-2xl border border-gray-800">
+            <div id="flashEffect" class="absolute inset-0 bg-white opacity-0 pointer-events-none z-20 transition-opacity duration-100"></div>
+            <video id="videoElement" autoplay playsinline class="w-full h-auto bg-black transform scale-x-[-1]"></video> <canvas id="canvasElement" class="hidden"></canvas>
+            <div class="absolute bottom-6 left-0 right-0 flex justify-center items-center gap-6 z-10">
+                <button type="button" onclick="closeCameraModal()" class="bg-gray-600/50 backdrop-blur text-white p-3 rounded-full hover:bg-gray-500 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <button type="button" onclick="takeSnapshot()" class="bg-white p-1 rounded-full border-4 border-gray-300 hover:border-blue-500 transition transform hover:scale-110">
+                    <div class="w-14 h-14 bg-white rounded-full border-2 border-black"></div>
+                </button>
+                <button type="button" onclick="switchCamera()" class="bg-gray-600/50 backdrop-blur text-white p-3 rounded-full hover:bg-gray-500 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                </button>
+            </div>
+            <div class="absolute top-4 left-0 right-0 text-center">
+                <span class="bg-black/50 text-white text-xs px-3 py-1 rounded-full backdrop-blur">Sesuaikan Wajah dalam Bingkai</span>
+            </div>
+        </div>
+    </div>
 @endsection

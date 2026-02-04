@@ -11,9 +11,6 @@
         
         <div class="flex flex-col md:flex-row justify-between items-center mb-12 text-white">
             <div class="flex items-center gap-5">
-                <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30 shadow-inner">
-                    <span class=""></span>
-                </div>
                 <div>
                     <h1 class="text-3xl font-bold tracking-tight">Halo, {{ Auth::user()->name }}</h1>
                     <p class="text-blue-100 font-medium opacity-90">
@@ -85,7 +82,7 @@
                 
                 <div class="lg:col-span-4 space-y-6">
                     
-                    <div class="bg-white rounded-[2rem] shadow-xl border border-slate-100 overflow-hidden relative">
+                    <div class="bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden relative">
                         <div class="bg-slate-50 p-6 border-b border-slate-100 flex justify-between items-center">
                             <div>
                                 <h3 class="font-bold text-slate-800 text-lg">Panel Kehadiran</h3>
@@ -148,13 +145,13 @@
                 <div class="lg:col-span-8">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         
-                        <a href="{{ route('guest.rekap') }}" class="group relative bg-white rounded-[2rem] p-8 shadow-xl hover:shadow-2xl transition duration-300 border border-slate-100 overflow-hidden flex flex-col justify-between h-64">
+                        <a href="{{ route('guest.rekap') }}" class="group relative bg-white rounded-xl p-8 shadow-xl hover:shadow-2xl transition duration-300 border border-slate-100 overflow-hidden flex flex-col justify-between h-64">
                             <div class="absolute right-0 bottom-0 opacity-5 transform translate-y-4 translate-x-4 group-hover:scale-110 transition duration-500">
                                 <svg class="w-40 h-40 text-blue-900" fill="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             </div>
 
                             <div class="relative z-10">
-                                <div class="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-4 group-hover:bg-blue-600 group-hover:text-white transition">
+                                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 mb-4 group-hover:bg-blue-600 group-hover:text-white transition">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                                 </div>
                                 <h3 class="text-lg font-bold text-slate-600">Total Tamu Hari Ini</h3>
@@ -172,13 +169,13 @@
                             </div>
                         </a>
 
-                        <a href="{{ route('absen.rekap') }}" class="group relative bg-white rounded-[2rem] p-8 shadow-xl hover:shadow-2xl transition duration-300 border border-slate-100 overflow-hidden flex flex-col justify-between h-64">
+                        <a href="{{ route('absen.rekap') }}" class="group relative bg-white rounded-xl p-8 shadow-xl hover:shadow-2xl transition duration-300 border border-slate-100 overflow-hidden flex flex-col justify-between h-64">
                              <div class="absolute right-0 bottom-0 opacity-5 transform translate-y-4 translate-x-4 group-hover:scale-110 transition duration-500">
                                 <svg class="w-40 h-40 text-purple-900" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                             </div>
 
                             <div class="relative z-10">
-                                <div class="w-12 h-12 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 mb-4 group-hover:bg-purple-600 group-hover:text-white transition">
+                                <div class="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600 mb-4 group-hover:bg-purple-600 group-hover:text-white transition">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                                 </div>
                                 <h3 class="text-lg font-bold text-slate-600">Riwayat Kehadiran</h3>
@@ -199,7 +196,7 @@
 
                     </div>
                     
-                    <div class="mt-6 bg-blue-900 rounded-[2rem] p-8 text-white relative overflow-hidden shadow-xl">
+                    <div class="mt-6 bg-blue-900 rounded-xl p-8 text-white relative overflow-hidden shadow-xl">
                         <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                         <div class="relative z-10 flex items-start gap-4">
                             <div class="p-3 bg-white/10 rounded-xl backdrop-blur-sm">

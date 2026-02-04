@@ -52,12 +52,11 @@
                             <td class="px-6 py-4 font-medium text-slate-500">{{ $index + 1 }}</td>
                             <td class="px-6 py-4 font-bold text-slate-700">{{ $user->name }}</td>
                             <td class="px-6 py-4 text-slate-600">{{ $user->email }}</td>
+                            
                             <td class="px-6 py-4 text-center">
-                                @if($user->role == 'superadmin')
-                                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold border border-red-200">Super Admin</span>
-                                @else
-                                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold border border-blue-200">Petugas Piket</span>
-                                @endif
+                                <span class="bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs font-bold border border-slate-200">
+                                    {{ $user->role == 'superadmin' ? 'Super Admin' : 'Petugas Piket' }}
+                                </span>
                             </td>
                             <td class="px-6 py-4 flex justify-center gap-2">
                                 <a href="{{ route('users.edit', $user->id) }}" class="bg-yellow-100 text-yellow-700 p-2 rounded-lg hover:bg-yellow-200 transition border border-yellow-200" title="Edit">

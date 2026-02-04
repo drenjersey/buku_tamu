@@ -6,55 +6,55 @@
         <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-100/30 rounded-full blur-3xl -mr-20 -mt-20"></div>
         <div class="absolute bottom-0 left-0 w-1/4 h-1/4 bg-yellow-100/20 rounded-full blur-3xl -ml-20 -mb-20"></div>
 
-        <div class="container mx-auto px-6 py-12 relative z-10">
+        <div class="container mx-auto px-4 md:px-6 py-12 relative z-10">
             <div class="mb-12">
-                <h1 class="text-4xl font-extrabold text-blue-900 mb-2">Rekap Kunjungan</h1>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-blue-900 mb-2">Rekap Kunjungan</h1>
                 <p class="text-slate-500 font-medium">Laporan data tamu Pemerintah Kota Mataram</p>
                 <div class="h-1 w-20 bg-yellow-500 mt-4 rounded-full"></div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-xl border border-blue-50 mb-8">
-                <form action="{{ route('guest.rekap') }}" method="GET" class="flex flex-wrap items-end gap-6">
+            <div class="bg-white p-6 rounded-xl shadow-xl border border-blue-50 mb-8">
+                <form action="{{ route('guest.rekap') }}" method="GET" class="flex flex-col md:flex-row flex-wrap items-end gap-4 md:gap-6">
                     
-                    <div class="space-y-2">
+                    <div class="space-y-2 w-full md:w-auto">
                         <label class="text-sm font-bold text-slate-600 block">Dari Tanggal</label>
                         <input type="date" name="start_date" value="{{ $startDate }}"
-                            class="px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none min-w-[200px] text-slate-700">
+                            class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none text-slate-700">
                     </div>
 
-                    <div class="space-y-2">
+                    <div class="space-y-2 w-full md:w-auto">
                         <label class="text-sm font-bold text-slate-600 block">Sampai Tanggal</label>
                         <input type="date" name="end_date" value="{{ $endDate }}"
-                            class="px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none min-w-[200px] text-slate-700">
+                            class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none text-slate-700">
                     </div>
                     
-                    <div class="space-y-2 flex-grow">
+                    <div class="space-y-2 flex-grow w-full md:w-auto">
                         <label class="text-sm font-bold text-slate-600 block">Cari Nama/Instansi</label>
                         <input type="text" name="search" value="{{ $search }}" placeholder="Ketik kata kunci..."
                             class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none text-slate-700">
                     </div>
 
                     <div class="flex gap-3 w-full md:w-auto">
-                        <button type="submit" class="bg-blue-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-800 transition shadow-lg shadow-blue-200 flex items-center gap-2">
+                        <button type="submit" class="flex-1 md:flex-none bg-blue-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-800 transition shadow-lg shadow-blue-200 flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                             Filter
                         </button>
 
-                        <button type="submit" formaction="{{ route('guest.export') }}" class="bg-green-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-700 transition shadow-lg shadow-green-200 flex items-center gap-2">
+                        <button type="submit" formaction="{{ route('guest.export') }}" class="flex-1 md:flex-none bg-green-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-green-700 transition shadow-lg shadow-green-200 flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                             CSV
                         </button>
 
-                        <a href="{{ route('guest.rekap') }}" class="bg-slate-100 text-slate-600 px-6 py-3 rounded-xl font-bold hover:bg-slate-200 transition border border-slate-200">
+                        <a href="{{ route('guest.rekap') }}" class="flex-1 md:flex-none bg-slate-100 text-slate-600 px-6 py-3 rounded-xl font-bold hover:bg-slate-200 transition border border-slate-200 text-center">
                             Reset
                         </a>
                     </div>
                 </form>
             </div>
 
-            <div class="bg-white rounded-[2rem] shadow-2xl border border-blue-50 overflow-hidden">
+            <div class="bg-white rounded-xl shadow-2xl border border-blue-50 overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse"> 
+                    <table class="w-full text-left border-collapse whitespace-nowrap"> 
                         <thead class="bg-blue-900 text-white">
                             <tr>
                                 <th class="px-6 py-5 text-sm font-bold uppercase tracking-wider border-r border-blue-700">Tanggal</th>
@@ -141,7 +141,6 @@
     </div>
 
     <div id="imageModal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        
         <div class="fixed inset-0 bg-black/95 backdrop-blur-sm transition-opacity opacity-0 enter:opacity-100 duration-300 ease-out" 
              id="modalBackdrop" 
              onclick="closeModal()">
@@ -155,10 +154,11 @@
             </svg>
         </button>
 
-        <div class="fixed inset-0 z-[110] overflow-y-auto pointer-events-none"> <div class="flex min-h-full items-center justify-center p-4 text-center">
-                
+        <div class="fixed inset-0 z-[110] overflow-y-auto pointer-events-none"> 
+            <div class="flex min-h-full items-center justify-center p-4 text-center">
                 <div class="relative transform overflow-hidden rounded-2xl text-left shadow-2xl transition-all pointer-events-auto max-w-5xl w-full" 
-                     onclick="event.stopPropagation()"> <img id="modalImage" src="" 
+                     onclick="event.stopPropagation()"> 
+                    <img id="modalImage" src="" 
                          class="w-full h-auto max-h-[85vh] object-contain bg-black/50 rounded-2xl border-4 border-white/10" 
                          alt="Preview Full">
                     
@@ -168,7 +168,6 @@
                         </span>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -178,36 +177,21 @@
         const backdrop = document.getElementById('modalBackdrop');
         const img = document.getElementById('modalImage');
 
-        // Fungsi Buka Modal
         function openModal(imageSrc) {
             img.src = imageSrc;
             modal.classList.remove('hidden');
-            
-            // Animasi Fade In Sederhana
-            setTimeout(() => {
-                backdrop.classList.remove('opacity-0');
-            }, 10);
-
-            document.body.style.overflow = 'hidden'; // Matikan scroll halaman belakang
+            setTimeout(() => { backdrop.classList.remove('opacity-0'); }, 10);
+            document.body.style.overflow = 'hidden';
         }
 
-        // Fungsi Tutup Modal
         function closeModal() {
             backdrop.classList.add('opacity-0');
-            
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                img.src = ''; 
-            }, 300); // Tunggu animasi selesai
-
-            document.body.style.overflow = 'auto'; // Hidupkan scroll kembali
+            setTimeout(() => { modal.classList.add('hidden'); img.src = ''; }, 300);
+            document.body.style.overflow = 'auto';
         }
 
-        // Tutup dengan tombol ESC keyboard
         document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape" && !modal.classList.contains('hidden')) {
-                closeModal();
-            }
+            if (event.key === "Escape" && !modal.classList.contains('hidden')) { closeModal(); }
         });
     </script>
 @endsection
