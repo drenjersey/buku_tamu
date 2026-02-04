@@ -128,7 +128,8 @@
                                 onchange="previewFile()">
                             <div
                                 class="border-2 border-dashed border-slate-300 rounded-xl p-4 bg-slate-50 text-center relative group min-h-[150px] flex flex-col items-center justify-center">
-                                <img id="preview_image" class="hidden max-h-48 rounded-lg shadow-md mb-3 object-cover">
+                                <img id="preview_image"
+                                    class="hidden max-h-48 w-full rounded-lg shadow-md mb-3 object-cover">
                                 <div id="placeholder_text" class="text-slate-500">
                                     <svg class="mx-auto h-10 w-10 mb-2 text-slate-400" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
@@ -188,21 +189,24 @@
                     class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300 text-center">
                     <h4 class="text-lg font-medium text-slate-500 mb-2">Total Pengunjung</h4>
                     <div class="text-5xl font-extrabold text-gray-800 mb-1 group-hover:scale-105 transition">
-                        {{ number_format($totalGuests) }}</div>
+                        {{ number_format($totalGuests) }}
+                    </div>
                     <p class="text-sm text-slate-400">Sejak Awal Tercatat</p>
                 </div>
                 <div
                     class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300 text-center">
                     <h4 class="text-lg font-medium text-slate-500 mb-2">Total Tahun Ini</h4>
                     <div class="text-5xl font-extrabold text-gray-800 mb-1 group-hover:scale-105 transition">
-                        {{ number_format($totalThisYear) }}</div>
+                        {{ number_format($totalThisYear) }}
+                    </div>
                     <p class="text-sm text-slate-400">Tahun {{ date('Y') }}</p>
                 </div>
                 <div
                     class="bg-white p-8 rounded-2xl border border-blue-100 shadow-xl group hover:border-blue-300 transition duration-300 text-center">
                     <h4 class="text-lg font-medium text-slate-500 mb-2">Bulan Ini</h4>
                     <div class="text-5xl font-extrabold text-gray-800 mb-1 group-hover:scale-105 transition">
-                        {{ number_format($totalThisMonth) }}</div>
+                        {{ number_format($totalThisMonth) }}
+                    </div>
                     <p class="text-sm text-slate-400">Bulan {{ date('F') }}</p>
                 </div>
             </div>

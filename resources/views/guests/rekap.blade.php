@@ -99,10 +99,10 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        @if($guest->foto)
+                                        @if($guest->foto_path)
                                             <div class="relative group cursor-zoom-in inline-block" 
-                                                 onclick="openModal('{{ $guest->foto_path ? asset('storage/' . $guest->foto_path) : asset('storage/' . $guest->foto) }}')">
-                                                <img src="{{ $guest->foto_path ? asset('storage/' . $guest->foto_path) : asset('storage/' . $guest->foto) }}" 
+                                                 onclick="openModal('{{ asset('storage/' . $guest->foto_path) }}')">
+                                                <img src="{{ asset('storage/' . $guest->foto_path) }}" 
                                                      class="h-10 w-10 md:h-12 md:w-12 object-cover rounded-lg border border-slate-200 shadow-sm transition transform group-hover:scale-105" 
                                                      alt="Foto">
                                                 
