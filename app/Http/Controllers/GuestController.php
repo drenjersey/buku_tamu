@@ -24,28 +24,29 @@ class GuestController extends Controller
         // Filter Pencarian (Search)
         if ($request->filled('search')) {
             $search = $request->search;
-            $queryRecent->where(function($q) use ($search) {
+            $queryRecent->where(function ($q) use ($search) {
                 $q->where('nama_tamu', 'like', "%{$search}%")
-                  ->orWhere('asal_instansi', 'like', "%{$search}%")
-                  ->orWhere('keperluan', 'like', "%{$search}%");
+                    ->orWhere('asal_instansi', 'like', "%{$search}%")
+                    ->orWhere('keperluan', 'like', "%{$search}%");
             });
         }
 
         // Filter Bulan & Tahun
         if ($request->filled('bulan') && $request->filled('tahun')) {
-            $queryRecent->whereMonth('created_at', (int)$request->bulan)
-                        ->whereYear('created_at', (int)$request->tahun);
+            $queryRecent->whereMonth('created_at', (int) $request->bulan)
+                ->whereYear('created_at', (int) $request->tahun);
         }
 
         // Default Limit jika tidak ada filter
-        if (!$request->filled('search') && !$request->filled('bulan')) {
-            $queryRecent->limit(5);
+        if (!$request->filled('search') && !$request->filled('bulan') && !$request->filled('tahun')) {
+            // $queryRecent->limit(5); // DISABLE LIMIT DEFAULT
         }
 
-        $recentGuests = $queryRecent->get();
+        // GANTI GET() DENGAN PAGINATE()
+        $recentGuests = $queryRecent->paginate(10);
 
-        // Konversi Tanggal ke Carbon
-        $recentGuests->transform(function ($guest) {
+        // Konversi Tanggal ke Carbon (Gunakan through untuk Paginator)
+        $recentGuests->through(function ($guest) {
             $guest->created_at = Carbon::parse($guest->created_at);
             return $guest;
         });
@@ -55,27 +56,26 @@ class GuestController extends Controller
         if ($request->ajax()) {
             return view('partials.guests-table', compact('recentGuests'))->render();
         }
-            
+
         // C. DATA PIE CHART
         $rawPie = DB::table('guests')
             ->select('asal_instansi', DB::raw('count(*) as total'))
             ->groupBy('asal_instansi')
             ->orderByDesc('total')
-            ->limit(7)
             ->get();
 
         $pieData = [];
         foreach ($rawPie as $row) {
             $pieData[$row->asal_instansi] = $row->total;
         }
-        
+
         // D. DATA BAR CHART
         $currentYear = date('Y');
         $rawMonthly = DB::table('guests')
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('count(*) as total'))
             ->whereYear('created_at', $currentYear)
             ->groupBy('month')->orderBy('month')->get();
-            
+
         $monthlyData = [];
         for ($i = 1; $i <= 12; $i++) {
             $found = $rawMonthly->firstWhere('month', $i);
@@ -86,8 +86,12 @@ class GuestController extends Controller
         }
 
         return view('landing-page', compact(
-            'totalGuests', 'totalThisYear', 'totalThisMonth', 
-            'recentGuests', 'pieData', 'monthlyData'
+            'totalGuests',
+            'totalThisYear',
+            'totalThisMonth',
+            'recentGuests',
+            'pieData',
+            'monthlyData'
         ));
     }
 
@@ -101,15 +105,18 @@ class GuestController extends Controller
             'jumlah_personil' => 'required|integer|min:1',
             'nama_tamu' => 'required|string|max:255',
             'asal_instansi' => 'required|string|max:255',
-            'kontak' => 'required|string|max:255',
+            'kontak' => 'nullable|string|max:255',
             'penerima_kunjungan' => 'required|string|max:255',
             'keperluan' => 'required|string',
-            'foto' => 'required|image|mimes:jpeg,png,jpg|max:5120',
+            'foto' => 'nullable|array|max:10', // Allow array, max 10 files
+            'foto.*' => 'image|mimes:jpeg,png,jpg|max:5120', // Validate each file
         ]);
 
-        $fotoPath = null;
+        $fotoPaths = [];
         if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('tamu_photos', 'public');
+            foreach ($request->file('foto') as $file) {
+                $fotoPaths[] = $file->store('tamu_photos', 'public');
+            }
         }
 
         DB::table('guests')->insert([
@@ -120,7 +127,7 @@ class GuestController extends Controller
             'kontak' => $request->kontak,
             'penerima_kunjungan' => $request->penerima_kunjungan,
             'keperluan' => $request->keperluan,
-            'foto_path' => $fotoPath,
+            'foto_path' => !empty($fotoPaths) ? json_encode($fotoPaths) : null, // Store as JSON
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -155,16 +162,16 @@ class GuestController extends Controller
 
         // 4. Terapkan Pencarian
         if ($search) {
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('nama_tamu', 'like', "%{$search}%")
-                  ->orWhere('asal_instansi', 'like', "%{$search}%");
+                    ->orWhere('asal_instansi', 'like', "%{$search}%");
             });
         }
 
         // 5. Urutkan & Pagination
         $guests = $query->orderBy('tanggal_kunjungan', 'desc')
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(10);
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         // Penting: Agar filter tidak hilang saat klik halaman 2, 3, dst.
         $guests->appends([

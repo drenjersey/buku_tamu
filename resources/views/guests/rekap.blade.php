@@ -99,12 +99,30 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        @if($guest->foto_path)
+                                        @php
+                                            $photos = [];
+                                            if ($guest->foto_path) {
+                                                $decoded = json_decode($guest->foto_path);
+                                                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                                                    $photos = $decoded;
+                                                } else {
+                                                    $photos = [$guest->foto_path]; // Handle legacy single path
+                                                }
+                                            }
+                                        @endphp
+
+                                        @if(count($photos) > 0)
                                             <div class="relative group cursor-zoom-in inline-block" 
-                                                 onclick="openModal('{{ asset('storage/' . $guest->foto_path) }}')">
-                                                <img src="{{ asset('storage/' . $guest->foto_path) }}" 
+                                                 onclick="openModal(@js($photos))">
+                                                <img src="{{ asset('storage/' . $photos[0]) }}" 
                                                      class="h-10 w-10 md:h-12 md:w-12 object-cover rounded-lg border border-slate-200 shadow-sm transition transform group-hover:scale-105" 
                                                      alt="Foto">
+                                                
+                                                @if(count($photos) > 1)
+                                                    <div class="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-md border border-white">
+                                                        +{{ count($photos) - 1 }}
+                                                    </div>
+                                                @endif
                                                 
                                                 <div class="absolute inset-0 bg-black/30 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200">
                                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m4-3H6"></path></svg>
@@ -131,11 +149,14 @@
                     </table>
                 </div>
 
-                @if($guests->hasPages())
-                    <div class="px-8 py-6 bg-slate-50 border-t border-blue-50">
-                        {{ $guests->links() }}
+                <div class="px-8 py-6 bg-slate-50 border-t border-blue-50 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <span class="text-sm text-slate-500">
+                        Menampilkan <strong>{{ $guests->count() }}</strong> dari <strong>{{ $guests->total() }}</strong> data
+                    </span>
+                    <div>
+                        {{ $guests->links('pagination::tailwind') }}
                     </div>
-                @endif
+                </div>
             </div>
         </div>
     </div>
@@ -156,13 +177,14 @@
 
         <div class="fixed inset-0 z-[110] overflow-y-auto pointer-events-none"> 
             <div class="flex min-h-full items-center justify-center p-4 text-center">
-                <div class="relative transform overflow-hidden rounded-2xl text-left shadow-2xl transition-all pointer-events-auto max-w-5xl w-full" 
+                <div class="relative transform overflow-hidden rounded-2xl text-left shadow-2xl transition-all pointer-events-auto max-w-5xl w-full max-h-[90vh] flex flex-col bg-transparent" 
                      onclick="event.stopPropagation()"> 
-                    <img id="modalImage" src="" 
-                         class="w-full h-auto max-h-[85vh] object-contain bg-black/50 rounded-2xl border-4 border-white/10" 
-                         alt="Preview Full">
                     
-                    <div class="mt-4 text-center">
+                    <div id="modalContent" class="overflow-y-auto p-4 flex flex-col gap-4 items-center">
+                        <!-- Images will be injected here -->
+                    </div>
+                    
+                    <div class="mt-4 text-center pb-4">
                         <span class="inline-block bg-white/10 text-white/70 text-xs px-4 py-2 rounded-full backdrop-blur-md border border-white/10">
                             Tekan tombol <b>X</b> atau klik area gelap untuk menutup
                         </span>
@@ -175,10 +197,23 @@
     <script>
         const modal = document.getElementById('imageModal');
         const backdrop = document.getElementById('modalBackdrop');
-        const img = document.getElementById('modalImage');
+        const modalContent = document.getElementById('modalContent');
 
-        function openModal(imageSrc) {
-            img.src = imageSrc;
+        function openModal(photos) {
+            // Ensure photos is an array
+            const photoArray = Array.isArray(photos) ? photos : [photos];
+            
+            // Clear previous content
+            modalContent.innerHTML = '';
+            
+            // Generate images
+            photoArray.forEach(path => {
+                const img = document.createElement('img');
+                img.src = "{{ asset('storage') }}/" + path;
+                img.className = "w-full h-auto max-w-3xl object-contain bg-black/50 rounded-2xl border-4 border-white/10 shadow-lg";
+                modalContent.appendChild(img);
+            });
+
             modal.classList.remove('hidden');
             setTimeout(() => { backdrop.classList.remove('opacity-0'); }, 10);
             document.body.style.overflow = 'hidden';
