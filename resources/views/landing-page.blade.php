@@ -72,13 +72,6 @@
                 <p class="text-xl text-slate-500 font-medium max-w-md mx-auto md:mx-0">
                     Kami menjawab informasi seputar kota dan melayani dengan sepenuh hati.
                 </p>
-                <div class="mt-10 flex flex-nowrap justify-center md:justify-start items-center gap-4 md:gap-8">
-                    <img src="{{ asset('assets/img/logo_mataram.jpeg') }}" alt="Logo Mataram"
-                        class="h-24 sm:h-32 md:h-36 lg:h-40 w-auto drop-shadow-xl hover:scale-105 transition duration-300">
-                    <div class="h-16 md:h-20 w-[1.5px] bg-slate-300 hidden sm:block rounded-full mx-2"></div>
-                    <img src="{{ asset('assets/img/logo_kominfo.png') }}" alt="Logo Kominfo"
-                        class="h-24 sm:h-32 md:h-36 lg:h-40 w-auto drop-shadow-xl hover:scale-105 transition duration-300">
-                </div>
                 <div class="mt-8 hidden md:block">
                     <span
                         class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-900 text-sm font-bold border border-blue-100">

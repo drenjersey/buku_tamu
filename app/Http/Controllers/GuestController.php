@@ -15,8 +15,8 @@ class GuestController extends Controller
     {
         // A. KPI CARD
         $totalGuests = DB::table('guests')->count();
-        $totalThisYear = DB::table('guests')->whereYear('created_at', date('Y'))->count();
-        $totalThisMonth = DB::table('guests')->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
+        $totalThisYear = DB::table('guests')->whereYear('tanggal_kunjungan', date('Y'))->count();
+        $totalThisMonth = DB::table('guests')->whereMonth('tanggal_kunjungan', date('m'))->whereYear('tanggal_kunjungan', date('Y'))->count();
 
         // B. QUERY DATA TABEL
         $queryRecent = DB::table('guests')->orderBy('created_at', 'desc');
