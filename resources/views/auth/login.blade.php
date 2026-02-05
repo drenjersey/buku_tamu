@@ -35,8 +35,8 @@
                         @csrf
 
                         <div>
-                            <label class="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wide">Email
-                                Dinas</label>
+                            <label class="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wide">Nama
+                                User</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor"
@@ -46,10 +46,10 @@
                                         </path>
                                     </svg>
                                 </div>
-                                <input type="email" name="email" required autofocus placeholder="nama@mataram.go.id"
+                                <input type="text" name="name" required autofocus placeholder="Masukkan Nama User"
                                     class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition text-sm font-medium">
                             </div>
-                            @error('email')
+                            @error('name')
                                 <p class="text-red-500 text-xs mt-1 font-bold">{{ $message }}</p>
                             @enderror
                         </div>
@@ -70,13 +70,18 @@
                                     class="w-full pl-10 pr-12 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition text-sm font-medium">
                                 <button type="button" id="togglePassword"
                                     class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-blue-600 focus:outline-none transition-all duration-200">
-                                    <svg id="eyeIcon" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg id="eyeIcon" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                                         <circle cx="12" cy="12" r="3" />
                                     </svg>
-                                    <svg id="eyeOffIcon" class="w-5 h-5 hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg id="eyeOffIcon" class="w-5 h-5 hidden" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
-                                        <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                                        <path
+                                            d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
                                         <path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
                                         <line x1="2" x2="22" y1="2" y2="22" />
                                     </svg>

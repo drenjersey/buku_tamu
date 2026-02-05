@@ -26,7 +26,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
             'role' => 'required|in:superadmin,petugas',
@@ -52,7 +52,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:users,name,' . $user->id,
             'email' => 'required|email|unique:users,email,' . $user->id,
             'role' => 'required|in:superadmin,petugas',
             'password' => 'nullable|string|min:6', // Password opsional saat edit
@@ -80,7 +80,7 @@ class UserController extends Controller
         if ($user->id == auth()->id()) {
             return back()->with('error', 'Anda tidak bisa menghapus akun Anda sendiri!');
         }
-        
+
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User berhasil dihapus.');
     }

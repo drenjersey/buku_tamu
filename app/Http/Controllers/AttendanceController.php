@@ -134,6 +134,47 @@ class AttendanceController extends Controller
         return back()->with('success', "Absensi Berhasil! Terdeteksi di: " . $check['location_name']);
     }
 
+    // --- ABSEN PULANG ---
+    public function checkOut(Request $request)
+    {
+        $request->validate(['latitude' => 'required', 'longitude' => 'required']);
+
+        // Check Time (Only after 17:00 WITA)
+        if (now()->setTimezone('Asia/Makassar')->hour < 17) {
+            return back()->with('error', 'Anda hanya bisa absen pulang pada saat jam 17:00 WITA 😤🗿');
+        }
+
+        $check = $this->checkLocation($request->latitude, $request->longitude);
+
+        if (!$check['status']) {
+            return back()->with('error', "Gagal Absen Pulang! Anda berada di luar radius.");
+        }
+
+        $userId = Auth::id();
+        $today = date('Y-m-d');
+
+        // Cek apakah sudah absen masuk hari ini?
+        $attendance = DB::table('attendances')
+            ->where('user_id', $userId)
+            ->where('date', $today)
+            ->first();
+
+        if (!$attendance) {
+            return back()->with('error', 'Anda belum melakukan absen masuk hari ini!');
+        }
+
+        if ($attendance->check_out) {
+            return back()->with('error', 'Anda sudah melakukan absen pulang hari ini!');
+        }
+
+        DB::table('attendances')->where('id', $attendance->id)->update([
+            'check_out' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return back()->with('success', "Terima Kasih Anda sudah melaksanakan tugas hari ini 😊");
+    }
+
     // --- REKAP DATA ---
     public function rekap(Request $request)
     {
@@ -164,7 +205,7 @@ class AttendanceController extends Controller
             $query->whereBetween('attendances.date', [$startDate, $endDate]);
         }
 
-        $rekap = $query->orderBy('attendances.date', 'desc')->paginate(10);
+        $rekap = $query->orderBy('attendances.date', 'desc')->paginate(5);
         $users = DB::table('users')->where('role', '!=', 'superadmin')->select('id', 'name')->get();
 
         return view('dashboard.rekap-absensi', compact('rekap', 'users', 'startDate', 'endDate', 'search'));
@@ -193,14 +234,17 @@ class AttendanceController extends Controller
             $file = fopen('php://output', 'w');
 
             // Header CSV
-            fputcsv($file, ['No', 'Tanggal', 'Nama Petugas', 'Waktu Absen (WITA)', 'Lokasi Absen', 'Status', 'Link Peta']);
+            fputcsv($file, ['No', 'Tanggal', 'Nama Petugas', 'Masuk', 'Pulang', 'Lokasi Absen', 'Link Peta']);
 
             $no = 1;
             foreach ($attendances as $row) {
                 // FIX: Konversi Waktu dari UTC ke WITA (Asia/Makassar)
-                // Kita anggap data database adalah UTC, lalu kita paksa ubah ke WITA (+8)
-                $waktuWita = $row->check_in
+                $masuk = $row->check_in
                     ? \Carbon\Carbon::parse($row->check_in, 'UTC')->setTimezone('Asia/Makassar')->format('H:i:s')
+                    : '-';
+
+                $pulang = $row->check_out
+                    ? \Carbon\Carbon::parse($row->check_out, 'UTC')->setTimezone('Asia/Makassar')->format('H:i:s')
                     : '-';
 
                 $mapsLink = "https://www.google.com/maps?q={$row->latitude},{$row->longitude}";
@@ -209,9 +253,9 @@ class AttendanceController extends Controller
                     $no++,
                     $row->date,
                     $row->name,
-                    $waktuWita, // Gunakan waktu yang sudah dikonversi
+                    $masuk,
+                    $pulang,
                     $mapsLink,
-                    $row->status,
                     $mapsLink
                 ]);
             }

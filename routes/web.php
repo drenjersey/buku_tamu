@@ -18,18 +18,18 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // 3. AREA KHUSUS PETUGAS (DASHBOARD & ADMIN)
 Route::middleware(['auth'])->group(function () {
-    
+
     // A. Dashboard Utama
     Route::get('/dashboard', [AttendanceController::class, 'dashboard'])->name('dashboard');
-    
+
     // B. Fitur Absensi
     Route::post('/absen/masuk', [AttendanceController::class, 'checkIn'])->name('absen.masuk');
     Route::post('/absen/pulang', [AttendanceController::class, 'checkOut'])->name('absen.pulang');
-    
+
     // C. Halaman Laporan / Rekap Absensi
     Route::get('/rekap-absensi', [AttendanceController::class, 'rekap'])->name('absen.rekap');
     Route::get('/rekap-absensi/export', [AttendanceController::class, 'exportCsv'])->name('absen.export');
-    
+
     // D. Rekap Buku Tamu
     Route::get('/rekap', [GuestController::class, 'rekap'])->name('guest.rekap');
     Route::get('/rekap/export', [GuestController::class, 'exportCsv'])->name('guest.export');

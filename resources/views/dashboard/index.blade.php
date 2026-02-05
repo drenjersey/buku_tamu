@@ -129,7 +129,8 @@
                                 <div>
                                     <h3 class="font-bold text-slate-800 text-lg">Panel Kehadiran</h3>
                                     <p class="text-xs text-slate-400 font-medium uppercase tracking-wider mt-1">
-                                        {{ date('l, d F Y') }}</p>
+                                        {{ date('l, d F Y') }}
+                                    </p>
                                 </div>
                                 <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                             </div>
@@ -172,30 +173,70 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M12 4v16m8-8H4"></path>
                                             </svg>
-                                            SCAN KEHADIRAN
+                                            SCAN MASUK
+                                        </button>
+                                    </form>
+                                @elseif(!$attendance->check_out)
+                                    @php
+                                        $canCheckOut = \Carbon\Carbon::now('Asia/Makassar')->hour >= 17;
+                                    @endphp
+                                    <form action="{{ route('absen.pulang') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="latitude" id="input-lat">
+                                        <input type="hidden" name="longitude" id="input-lng">
+
+                                        @if(!$canCheckOut)
+                                            <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4 text-center">
+                                                <p class="text-amber-700 text-xs font-bold flex items-center justify-center gap-2">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                    </svg>
+                                                    Absen Pulang Belum Tersedia
+                                                </p>
+                                                <p class="text-[10px] text-amber-600 font-medium leading-relaxed">Anda hanya bisa absen
+                                                    pulang pada saat jam 17:00 WITA 😊</p>
+                                            </div>
+                                        @endif
+
+                                        <button type="submit" id="btn-absen" disabled
+                                            class="w-full py-4 rounded-xl font-bold text-white shadow-lg transition-all transform active:scale-95 flex items-center justify-center gap-2 {{ $canCheckOut ? 'bg-slate-300 cursor-not-allowed' : 'bg-slate-200 cursor-not-allowed opacity-50' }}">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                                                </path>
+                                            </svg>
+                                            SCAN PULANG
                                         </button>
                                     </form>
                                 @else
                                     <div
-                                        class="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-6 text-center relative overflow-hidden">
+                                        class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-6 text-center relative overflow-hidden">
                                         <div
-                                            class="absolute top-0 right-0 -mt-2 -mr-2 w-16 h-16 bg-green-200 rounded-full blur-xl opacity-50">
+                                            class="absolute top-0 right-0 -mt-2 -mr-2 w-16 h-16 bg-blue-200 rounded-full blur-xl opacity-50">
                                         </div>
 
                                         <div
-                                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm border border-green-100">
-                                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor"
+                                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-3 shadow-sm border border-blue-100">
+                                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M5 13l4 4L19 7"></path>
                                             </svg>
                                         </div>
-                                        <h4 class="font-bold text-green-800 text-lg">Absensi Berhasil</h4>
-                                        <p class="text-sm text-green-600 mb-2">Terima kasih atas dedikasi Anda.</p>
-                                        <div
-                                            class="inline-block bg-white px-4 py-1 rounded-full text-xs font-mono font-bold text-green-700 border border-green-200">
-                                            {{ \Carbon\Carbon::parse($attendance->check_in, 'UTC')->setTimezone('Asia/Makassar')->format('H:i') }}
-                                            WITA
+                                        <h4 class="font-bold text-blue-800 text-lg">Tugas Selesai</h4>
+                                        <p class="text-sm text-blue-600 mb-2">Anda telah absen masuk & pulang.</p>
+                                        <div class="flex justify-center gap-2">
+                                            <div
+                                                class="bg-white px-3 py-1 rounded-full text-[10px] font-mono font-bold text-green-700 border border-green-200">
+                                                IN:
+                                                {{ \Carbon\Carbon::parse($attendance->check_in, 'UTC')->setTimezone('Asia/Makassar')->format('H:i') }}
+                                            </div>
+                                            <div
+                                                class="bg-white px-3 py-1 rounded-full text-[10px] font-mono font-bold text-red-700 border border-red-200">
+                                                OUT:
+                                                {{ \Carbon\Carbon::parse($attendance->check_out, 'UTC')->setTimezone('Asia/Makassar')->format('H:i') }}
+                                            </div>
                                         </div>
                                     </div>
                                 @endif
@@ -226,7 +267,7 @@
                                             </path>
                                         </svg>
                                     </div>
-                                    <h3 class="text-lg font-bold text-slate-600">Total Tamu Hari Ini</h3>
+                                    <h3 class="text-lg font-bold text-slate-600">Rekapitulasi Tamu Hari Ini</h3>
                                 </div>
 
                                 <div class="relative z-10">
@@ -355,11 +396,11 @@
         // FUNGSI LOCK LOCATION (SNAPSHOT)
         function lockLocation() {
             statusEl.innerHTML = `
-                <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 flex items-center justify-center gap-3">
-                    <svg class="w-5 h-5 text-blue-600 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                    <span class="text-sm font-bold text-blue-700">Mencari Koordinat GPS...</span>
-                </div>
-            `;
+                        <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 flex items-center justify-center gap-3">
+                            <svg class="w-5 h-5 text-blue-600 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            <span class="text-sm font-bold text-blue-700">Mencari Koordinat GPS...</span>
+                        </div>
+                    `;
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition((pos) => {
@@ -400,30 +441,30 @@
 
                     if (isValidLocation) {
                         statusEl.innerHTML = `
-                            <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
-                                <div class="flex items-center justify-center gap-2 mb-1">
-                                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
-                                    <span class="text-sm font-bold text-green-700">LOKASI VALID</span>
-                                </div>
-                                <p class="text-xs text-green-600 mb-2">Terdeteksi di area: ${closestLocName}</p>
-                                ${refreshBtn}
-                            </div>
-                        `;
+                                    <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
+                                        <div class="flex items-center justify-center gap-2 mb-1">
+                                            <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                            <span class="text-sm font-bold text-green-700">LOKASI VALID</span>
+                                        </div>
+                                        <p class="text-xs text-green-600 mb-2">Terdeteksi di area: ${closestLocName}</p>
+                                        ${refreshBtn}
+                                    </div>
+                                `;
                         if (btnAbsen) {
                             btnAbsen.disabled = false;
                             btnAbsen.className = "w-full py-4 rounded-xl font-bold text-white shadow-lg shadow-blue-500/30 transition-all transform active:scale-95 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700";
                         }
                     } else {
                         statusEl.innerHTML = `
-                            <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-                                <div class="flex items-center justify-center gap-2 mb-1">
-                                    <div class="w-2 h-2 rounded-full bg-red-500"></div>
-                                    <span class="text-sm font-bold text-red-700">LOKASI DI LUAR JANGKAUAN</span>
-                                </div>
-                                <p class="text-xs text-red-600 mb-2">Jarak: ${Math.round(closestDist)}m. Akurasi HP: ${Math.round(accuracy)}m</p>
-                                ${refreshBtn}
-                            </div>
-                        `;
+                                    <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
+                                        <div class="flex items-center justify-center gap-2 mb-1">
+                                            <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                                            <span class="text-sm font-bold text-red-700">LOKASI DI LUAR JANGKAUAN</span>
+                                        </div>
+                                        <p class="text-xs text-red-600 mb-2">Jarak: ${Math.round(closestDist)}m. Akurasi HP: ${Math.round(accuracy)}m</p>
+                                        ${refreshBtn}
+                                    </div>
+                                `;
                         if (btnAbsen) {
                             btnAbsen.disabled = true;
                             btnAbsen.className = "w-full py-4 rounded-xl font-bold text-white shadow-none transition-all flex items-center justify-center gap-2 bg-slate-300 cursor-not-allowed";

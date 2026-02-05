@@ -65,7 +65,7 @@
             <a href="{{ route('home') }}#tabel-kunjungan"
                 class="text-sm font-bold transition text-slate-500 hover:text-blue-700">Daftar Pengunjung</a>
             <a href="{{ route('guest.rekap') }}"
-                class="text-sm font-bold transition {{ request()->routeIs('guest.rekap') || request()->routeIs('guest.export') ? 'text-blue-700' : 'text-slate-500 hover:text-blue-700' }}">Rekap</a>
+                class="text-sm font-bold transition {{ request()->routeIs('guest.rekap') || request()->routeIs('guest.export') ? 'text-blue-700' : 'text-slate-500 hover:text-blue-700' }}">Rekapitulasi</a>
         </nav>
 
         <div class="flex items-center gap-3">
@@ -133,7 +133,7 @@
                     class="px-4 py-3 rounded-lg font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-700 transition">Daftar
                     Pengunjung</a>
                 <a href="{{ route('guest.rekap') }}"
-                    class="px-4 py-3 rounded-lg font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-700 transition {{ request()->routeIs('guest.rekap') ? 'bg-blue-50 text-blue-700' : '' }}">Rekap</a>
+                    class="px-4 py-3 rounded-lg font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-700 transition {{ request()->routeIs('guest.rekap') ? 'bg-blue-50 text-blue-700' : '' }}">Rekapitulasi</a>
 
                 <div class="h-px bg-slate-100 my-2"></div>
 
@@ -164,7 +164,8 @@
     </main>
 
     <footer class="bg-white py-8 border-t border-slate-100 text-center text-slate-500 text-sm mt-auto">
-        <p>&copy; {{ date('Y') }} Pemerintah Kota Mataram. All Rights Reserved.</p>
+        <p>&copy; {{ date('Y') }} Bidang Penyelenggaraan e-Government Dinas Kominfo Kota Mataram. All Rights Reserved.
+        </p>
     </footer>
 
     <script>

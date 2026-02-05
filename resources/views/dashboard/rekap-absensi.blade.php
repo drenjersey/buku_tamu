@@ -92,7 +92,7 @@
 
 
 
-            <div class="bg-white rounded-lg shadow-xl border border-blue-50 overflow-hidden">
+            <div id="attendance-table" class="bg-white rounded-lg shadow-xl border border-blue-50 overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead class="bg-slate-800 text-white">
@@ -107,10 +107,8 @@
                                 <th
                                     class="px-6 py-4 border-r border-slate-600 text-sm font-bold uppercase tracking-wider text-center">
                                     Pulang</th>
-                                <th
-                                    class="px-6 py-4 border-r border-slate-600 text-sm font-bold uppercase tracking-wider text-center">
+                                <th class="px-6 py-4 text-sm font-bold uppercase tracking-wider text-center">
                                     Lokasi</th>
-                                <th class="px-6 py-4 text-sm font-bold uppercase tracking-wider text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
@@ -146,7 +144,7 @@
                                         @endif
                                     </td>
 
-                                    <td class="px-6 py-4 border-r border-slate-100 text-center">
+                                    <td class="px-6 py-4 text-center">
                                         @if($row->latitude && $row->longitude)
                                             <a href="https://www.google.com/maps/search/?api=1&query={{ $row->latitude }},{{ $row->longitude }}"
                                                 target="_blank"
@@ -164,17 +162,10 @@
                                             <span class="text-xs text-slate-400 italic">No GPS</span>
                                         @endif
                                     </td>
-
-                                    <td class="px-6 py-4 text-center">
-                                        <span
-                                            class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 ring-1 ring-blue-200">
-                                            {{ $row->status }}
-                                        </span>
-                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="px-6 py-12 text-center">
+                                    <td colspan="5" class="px-6 py-12 text-center">
                                         <div class="flex flex-col items-center justify-center">
                                             <div class="bg-slate-50 p-4 rounded-full mb-3">
                                                 <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor"
@@ -198,7 +189,7 @@
                         Menampilkan <strong>{{ $rekap->count() }}</strong> dari <strong>{{ $rekap->total() }}</strong> data
                     </span>
                     <div>
-                        {{ $rekap->appends(request()->query())->links('pagination::tailwind') }}
+                        {{ $rekap->fragment('attendance-table')->appends(request()->query())->links('pagination::tailwind') }}
                     </div>
                 </div>
             </div>
