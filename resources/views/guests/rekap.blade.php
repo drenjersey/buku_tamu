@@ -206,22 +206,81 @@
             // Clear previous content
             modalContent.innerHTML = '';
             
-            // Generate images
-            photoArray.forEach(path => {
+            // Generate images with download buttons
+            photoArray.forEach((path, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = "relative group w-full max-w-3xl mb-4";
+                
                 const img = document.createElement('img');
-                img.src = "{{ asset('storage') }}/" + path;
-                img.className = "w-full h-auto max-w-3xl object-contain bg-black/50 rounded-2xl border-4 border-white/10 shadow-lg";
-                modalContent.appendChild(img);
+                const fullPath = "{{ asset('storage') }}/" + path;
+                img.src = fullPath;
+                img.className = "w-full h-auto object-contain bg-black/50 rounded-2xl border-4 border-white/10 shadow-lg";
+                
+                const downloadBtn = document.createElement('a');
+                downloadBtn.href = fullPath;
+                downloadBtn.download = `foto-kunjungan-${index + 1}.jpg`;
+                downloadBtn.className = "absolute bottom-4 right-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl font-bold flex items-center gap-2 shadow-xl transition-all opacity-0 group-hover:opacity-100 backdrop-blur-md border border-white/20";
+                downloadBtn.innerHTML = `
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    Download
+                `;
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(downloadBtn);
+                modalContent.appendChild(wrapper);
             });
+
+            // Add "Download All" button at the bottom if multiple photos
+            if (photoArray.length > 1) {
+                const downloadAllBtn = document.createElement('button');
+                downloadAllBtn.className = "mt-6 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-2xl font-black flex items-center gap-3 shadow-2xl transition-all transform hover:scale-105 active:scale-95 border-2 border-white/20 mb-8";
+                downloadAllBtn.innerHTML = `
+                    UNDUH SEMUA FOTO (${photoArray.length})
+                `;
+                downloadAllBtn.onclick = function() { downloadAll(photoArray, this); };
+                modalContent.appendChild(downloadAllBtn);
+            }
 
             modal.classList.remove('hidden');
             setTimeout(() => { backdrop.classList.remove('opacity-0'); }, 10);
             document.body.style.overflow = 'hidden';
         }
 
+        async function downloadAll(photos, btn) {
+            const originalText = btn.innerText;
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            for (let i = 0; i < photos.length; i++) {
+                btn.innerText = `MENGUNDUH (${i + 1}/${photos.length})...`;
+                
+                const link = document.createElement('a');
+                link.href = "{{ asset('storage') }}/" + photos[i];
+                link.download = `foto-kunjungan-${i + 1}.jpg`;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                
+                await new Promise(resolve => setTimeout(resolve, 800));
+                document.body.removeChild(link);
+            }
+
+            btn.innerText = "SELESAI!";
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }, 2000);
+        }
+
         function closeModal() {
             backdrop.classList.add('opacity-0');
-            setTimeout(() => { modal.classList.add('hidden'); img.src = ''; }, 300);
+            setTimeout(() => { 
+                modal.classList.add('hidden'); 
+                modalContent.innerHTML = ''; 
+            }, 300);
             document.body.style.overflow = 'auto';
         }
 
